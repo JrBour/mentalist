@@ -1,12 +1,12 @@
 workspace_container=mentalist_workspace_1
 
 install:
-	docker exec $(workspace_container) composer install; reset; npm install; reset  
+	docker exec $(workspace_container) composer install; yarn
 
 build: install
 
 dev:
-	docker exec $(workspace_container) npm run dev;
+	docker exec $(workspace_container) yarn dev
 
 start:
 	(cd laradock; docker-compose up -d php-fpm nginx postgres adminer)

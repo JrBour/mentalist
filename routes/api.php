@@ -1,5 +1,4 @@
 <?php
 
-
-Route::resource('users', 'UserController');
+Route::apiResource('users', 'UserController');
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -19,21 +20,23 @@ class UserController extends Controller
     }
 
     /**
-     * Create new user
+     * Create User
      *
      * @param Request $request
-     * @return User
-     * @throws \Illuminate\Validation\ValidationException
+     * @return User|\Illuminate\Support\MessageBag
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $validation = Validator::make($request->all(), [
             'firstname' => 'required|string|min:2|max:255',
             'name' => 'required|string|min:2|max:255',
             'email' => 'required|string|email|min:2|max:255',
-            'username' => 'required|integer|min:2|max:150',
+            'username' => 'required|string|min:2|max:150',
             'password' => 'required|string|min:6|max:255'
         ]);
+
+        if ($validation->fails())
+            return $validation->errors();
 
         $user = new User();
         $user->firstname = $request->firstname;
@@ -65,25 +68,30 @@ class UserController extends Controller
      *
      * @param Request $request
      * @param int $id
-     * @return mixed
-     * @throws \Illuminate\Validation\ValidationException
+     * @return User|\Illuminate\Support\MessageBag
      */
     public function update(Request $request, int $id)
     {
-        $this->validate($request, [
+        $validation = Validator::make($request->all(), [
             'firstname' => 'required|string|min:2|max:255',
             'name' => 'required|string|min:2|max:255',
-            'email' => 'required|string|min:2|max:255',
-            'username' => 'required|integer|min:2|max:150',
+            'email' => 'required|string|email|min:2|max:255',
+            'username' => 'required|string|min:2|max:150',
             'password' => 'required|string|min:6|max:255'
         ]);
 
+        if ($validation->fails()) {
+            return $validation->errors();
+        }
+
         $user = User::find($id);
-        $user->firstname = $request->input('firstname');
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->password = Hash::make($request->input('password'));
-        $user->email_hashed = md5( strtolower( trim($request->input('email') )));
+        $user->firstname = $request->firstname;
+        $user->username= $request->username;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->admin    = true;
+        $user->password = Hash::make($request->password);
+        $user->email_hashed = md5( strtolower( trim($request->email )));
 
         $user->save();
 

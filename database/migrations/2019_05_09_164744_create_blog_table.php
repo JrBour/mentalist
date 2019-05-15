@@ -34,8 +34,8 @@ class CreateBlogTable extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
             $table->longText('content');
-            $table->bigInteger('user_id')->unsigned()->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+            $table->bigInteger('author_id')->unsigned()->nullable();
+            $table->foreign('author_id')->references('id')->on('users')->onDelete('set null');
             $table->unsignedInteger('article_id');
             $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
             $table->timestamps();

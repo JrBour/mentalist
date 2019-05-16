@@ -17,4 +17,14 @@ class Article extends Model
     {
         return $this->belongsTo('App\User', 'author_id');
     }
+
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
+
+    public function likes()
+    {
+        return $this->hasMany('App\Like');
+    }
 }

@@ -7,6 +7,17 @@ use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * @OA\Tag(
+ *     name="user",
+ *     description="Operations about user",
+ *     @OA\ExternalDocumentation(
+ *         description="Find out more about",
+ *         url="http://swagger.io"
+ *     )
+ * )
+ */
+
 class UserController extends Controller
 {
     /**
@@ -14,6 +25,24 @@ class UserController extends Controller
      *
      * @return User[]|\Illuminate\Database\Eloquent\Collection
      */
+
+    /**
+    * @OA\Get(
+    *      path="/users",
+    *      operationId="getUsersList",
+    *      tags={"user"},
+    *      summary="Get list of all users",
+    *      description="Returns list of users",
+    *      @OA\Response(
+    *          response=200,
+    *          description="successful operation"
+    *       ),
+    *       @OA\Response(response=400, description="Bad request"),
+    *     )
+    *
+    * Returns list of users
+    */
+
     public function index()
     {
         return User::all();
@@ -25,6 +54,27 @@ class UserController extends Controller
      * @param Request $request
      * @return User|\Illuminate\Support\MessageBag
      */
+
+    /**
+    * @OA\Post(
+    *     path="/users",
+    *     tags={"user"},
+    *     summary="Create user",
+    *     description="Create an user",
+    *     operationId="createUser",
+    *     @OA\Response(
+    *         response="default",
+    *         description="successful operation"
+    *     ),
+    *     @OA\Parameter(name="firstname",
+    *       in="path",
+    *       required=true,
+    *       @OA\Schema(type="string")
+    *       ),
+    *     @
+    * )
+    */
+
     public function store(Request $request)
     {
         $validation = Validator::make($request->all(), [

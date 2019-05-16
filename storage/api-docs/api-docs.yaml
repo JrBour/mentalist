@@ -1,0 +1,46 @@
+openapi: 3.0.0
+info:
+  title: Mentalist
+  description: 'The mentalist API documentation'
+  contact:
+    email: darius@matulionis.lt
+  license:
+    name: 'Apache 2.0'
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost/api'
+    description: 'L5 Swagger OpenApi dynamic host server'
+paths:
+  /users:
+    get:
+      tags:
+        - user
+      summary: 'Get list of all users'
+      description: 'Returns list of users'
+      operationId: getUsersList
+      responses:
+        200:
+          description: 'successful operation'
+        400:
+          description: 'Bad request'
+    post:
+      tags:
+        - user
+      summary: 'Create user'
+      description: 'Create an user'
+      operationId: createUser
+      requestBody:
+        description: 'Create user object'
+        required: true
+      responses:
+        default:
+          description: 'successful operation'
+tags:
+  -
+    name: user
+    description: 'Operations about user'
+    externalDocs:
+      description: 'Find out more about'
+      url: 'http://swagger.io'

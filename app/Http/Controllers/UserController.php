@@ -17,64 +17,52 @@ use Illuminate\Support\Facades\Validator;
  *     )
  * )
  */
-
 class UserController extends Controller
 {
     /**
+     * @OA\Get(
+     *      path="/users",
+     *      operationId="getUsersList",
+     *      tags={"user"},
+     *      summary="Get list of all users",
+     *      description="Returns list of users",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     * )
+     *
      * Retrieve a User collection
      *
      * @return User[]|\Illuminate\Database\Eloquent\Collection
      */
-
-    /**
-    * @OA\Get(
-    *      path="/users",
-    *      operationId="getUsersList",
-    *      tags={"user"},
-    *      summary="Get list of all users",
-    *      description="Returns list of users",
-    *      @OA\Response(
-    *          response=200,
-    *          description="successful operation"
-    *       ),
-    *       @OA\Response(response=400, description="Bad request"),
-    *     )
-    *
-    * Returns list of users
-    */
-
     public function index()
     {
         return User::all();
     }
 
     /**
+     * @OA\Post(
+     *     path="/users",
+     *     tags={"user"},
+     *     summary="Create user",
+     *     description="Create an user",
+     *     operationId="createUser",
+     *     @OA\Response(
+     *         response=201,
+     *         description="successful operation"
+     *     ),
+     *     @OA\RequestBody(
+     *          @OA\JsonContent(ref="#/components/schemas/User")
+     *     )
+     * )
+     *
      * Create User
      *
      * @param Request $request
      * @return User|\Illuminate\Support\MessageBag
      */
-
-    /**
-    * @OA\Post(
-    *     path="/users",
-    *     tags={"user"},
-    *     summary="Create user",
-    *     description="Create an user",
-    *     operationId="createUser",
-    *     @OA\Response(
-    *         response="default",
-    *         description="successful operation"
-    *     ),
-    *     @OA\Parameter(name="firstname",
-    *       in="path",
-    *       required=true,
-    *       @OA\Schema(type="string")
-    *       ),
-    *     @
-    * )
-    */
-
     public function store(Request $request)
     {
         $validation = Validator::make($request->all(), [
@@ -103,6 +91,20 @@ class UserController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *      path="/users/{id}",
+     *      operationId="getUser",
+     *      tags={"user"},
+     *      summary="Get user by id",
+     *      description="Return user",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation"
+     *          @OA\JsonContent(ref="#/components/schemas/User"),
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     * )
+     *
      * Retrieve single User
      *
      * @param  int  $id

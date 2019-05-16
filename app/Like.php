@@ -4,6 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @OA\Schema(
+ *     type="object",
+ *     required={"article_id", "user_id"},
+ *      @OA\Property(property="id", type="integer"),
+ *      @OA\Property(property="article_id", type="integer", description="The article related to like"),
+ *      @OA\Property(property="user_id", type="integer", description="The user related to like")
+ * )
+ */
 class Like extends Model
 {
     public $timestamps = false;

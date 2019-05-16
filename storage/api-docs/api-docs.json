@@ -44,14 +44,160 @@
                 "description": "Create an user",
                 "operationId": "createUser",
                 "requestBody": {
-                    "description": "Create user object",
-                    "required": true
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
                 },
                 "responses": {
-                    "default": {
+                    "201": {
                         "description": "successful operation"
                     }
                 }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Get user by id",
+                "description": "Return user",
+                "operationId": "getUser",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Article": {
+                "required": [
+                    "title",
+                    "content",
+                    "author_id",
+                    "category_id"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "string"
+                    },
+                    "author_id": {
+                        "description": "The author of the article",
+                        "type": "integer"
+                    },
+                    "category_id": {
+                        "description": "The category of the article",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "Category": {
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Comment": {
+                "required": [
+                    "content",
+                    "article_id",
+                    "author_id"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "content": {
+                        "type": "string"
+                    },
+                    "article_id": {
+                        "description": "The article related to comment",
+                        "type": "integer"
+                    },
+                    "author_id": {
+                        "description": "The author of the comment",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "Like": {
+                "required": [
+                    "article_id",
+                    "user_id"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "article_id": {
+                        "description": "The article related to like",
+                        "type": "integer"
+                    },
+                    "user_id": {
+                        "description": "The user related to like",
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "required": [
+                    "firstname",
+                    "username",
+                    "name",
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "firstname": {
+                        "type": "string"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "email_hashed": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
             }
         }
     },

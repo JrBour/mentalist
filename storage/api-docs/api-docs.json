@@ -19,13 +19,153 @@
         }
     ],
     "paths": {
+        "/categories": {
+            "get": {
+                "tags": [
+                    "category"
+                ],
+                "summary": "Get list of all categories",
+                "operationId": "getCategories",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "category"
+                ],
+                "description": "Create a category",
+                "operationId": "createCategory",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Category"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/categories/{id}": {
+            "get": {
+                "tags": [
+                    "category"
+                ],
+                "summary": "Get category by id",
+                "operationId": "getCategory",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "category"
+                ],
+                "summary": "Update category",
+                "operationId": "UpdateCategory",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Category"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "category"
+                ],
+                "summary": "Delete category",
+                "operationId": "deleteCategory",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
         "/users": {
             "get": {
                 "tags": [
                     "user"
                 ],
                 "summary": "Get list of all users",
-                "description": "Returns list of users",
                 "operationId": "getUsersList",
                 "responses": {
                     "200": {
@@ -40,8 +180,7 @@
                 "tags": [
                     "user"
                 ],
-                "summary": "Create user",
-                "description": "Create an user",
+                "summary": "Create an user",
                 "operationId": "createUser",
                 "requestBody": {
                     "content": {
@@ -65,7 +204,6 @@
                     "user"
                 ],
                 "summary": "Get user by id",
-                "description": "Return user",
                 "operationId": "getUser",
                 "parameters": [
                     {
@@ -97,8 +235,7 @@
                 "tags": [
                     "user"
                 ],
-                "summary": "Update user",
-                "description": "Update an user",
+                "summary": "Update an user",
                 "operationId": "UpdateUser",
                 "parameters": [
                     {
@@ -136,8 +273,7 @@
                 "tags": [
                     "user"
                 ],
-                "summary": "Delete user",
-                "description": "Delete user",
+                "summary": "Delete an user",
                 "operationId": "deleteUser",
                 "parameters": [
                     {
@@ -196,7 +332,8 @@
                 ],
                 "properties": {
                     "id": {
-                        "type": "integer"
+                        "type": "integer",
+                        "readOnly": "true"
                     },
                     "name": {
                         "type": "string"
@@ -212,7 +349,8 @@
                 ],
                 "properties": {
                     "id": {
-                        "type": "integer"
+                        "type": "integer",
+                        "readOnly": "true"
                     },
                     "content": {
                         "type": "string"
@@ -286,6 +424,14 @@
         }
     },
     "tags": [
+        {
+            "name": "category",
+            "description": "Operations about category",
+            "externalDocs": {
+                "description": "Find out more about",
+                "url": "http://swagger.io"
+            }
+        },
         {
             "name": "user",
             "description": "Operations about user",

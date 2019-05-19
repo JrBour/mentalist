@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * @OA\Schema(
  *     type="object",
  *     required={"name"},
- *      @OA\Property(property="id", type="integer"),
+ *      @OA\Property(property="id", type="integer", readOnly="true"),
  *      @OA\Property(property="name", type="string")
  * )
  */

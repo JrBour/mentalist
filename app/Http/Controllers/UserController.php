@@ -25,7 +25,6 @@ class UserController extends Controller
      *      operationId="getUsersList",
      *      tags={"user"},
      *      summary="Get list of all users",
-     *      description="Returns list of users",
      *      @OA\Response(
      *          response=200,
      *          description="successful operation",
@@ -50,8 +49,7 @@ class UserController extends Controller
      * @OA\Post(
      *     path="/users",
      *     tags={"user"},
-     *     summary="Create user",
-     *     description="Create an user",
+     *     summary="Create an user",
      *     operationId="createUser",
      *     @OA\Response(
      *         response=201,
@@ -100,7 +98,6 @@ class UserController extends Controller
      *      operationId="getUser",
      *      tags={"user"},
      *      summary="Get user by id",
-     *      description="Return user",
      *      @OA\Parameter(
      *          in="path",
      *          name="id",
@@ -128,12 +125,10 @@ class UserController extends Controller
     }
 
     /**
-     *
      * @OA\Put(
      *     path="/users/{id}",
      *     tags={"user"},
-     *     summary="Update user",
-     *     description="Update an user",
+     *     summary="Update an user",
      *     operationId="UpdateUser",
      *     @OA\Parameter(
      *          in="path",
@@ -188,13 +183,11 @@ class UserController extends Controller
 
 
     /**
-     *
      *  @OA\Delete(
      *      path="/users/{id}",
      *      operationId="deleteUser",
      *      tags={"user"},
-     *      summary="Delete user",
-     *      description="Delete user",
+     *      summary="Delete an user",
      *      @OA\Parameter(
      *          in="path",
      *          name="id",

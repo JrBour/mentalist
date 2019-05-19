@@ -8,12 +8,37 @@ use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * @OA\Tag(
+ *     name="article",
+ *     description="Operations about article",
+ *     @OA\ExternalDocumentation(
+ *         description="Find out more about",
+ *         url="http://swagger.io"
+ *     )
+ * )
+ */
 class ArticleController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *      path="/articles",
+     *      operationId="getArticles",
+     *      tags={"article"},
+     *      summary="Get list of all articles",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\Schema(
+     *              type="array",
+     *              items={@OA\Schema(ref="#/components/schemas/Article")}
+     *          )
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     * )
+     * Retrieve all categories
      *
-     * @return \Illuminate\Http\Response
+     * @return Article[]|\Illuminate\Database\Eloquent\Collection
      */
     public function index()
     {
@@ -21,10 +46,25 @@ class ArticleController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     *  @OA\Post(
+     *     path="/articles",
+     *     tags={"article"},
+     *     description="Create an article",
+     *     operationId="createArticle",
+     *     @OA\Response(
+     *         response=201,
+     *         description="successful operation"
+     *     ),
+     *     @OA\RequestBody(
+     *          @OA\JsonContent(ref="#/components/schemas/Article")
+     *     ),
+     *     @OA\Response(response=400, description="Bad request")
+     * )
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Create article
+     *
+     * @param Request $request
+     * @return Article|\Illuminate\Support\MessageBag
      */
     public function store(Request $request)
     {
@@ -50,10 +90,30 @@ class ArticleController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *      path="/articles/{id}",
+     *      operationId="getArticle",
+     *      tags={"article"},
+     *      summary="Get article by id",
+     *      @OA\Parameter(
+     *          in="path",
+     *          name="id",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/Article"),
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     * )
+     * Get article by id
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return mixed
      */
     public function show(int $id)
     {
@@ -61,7 +121,31 @@ class ArticleController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Put(
+     *     path="/articles/{id}",
+     *     tags={"article"},
+     *     summary="Update article",
+     *     operationId="updateArticle",
+     *     @OA\Parameter(
+     *          in="path",
+     *          name="id",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/Article"),
+     *     ),
+     *     @OA\RequestBody(
+     *          @OA\JsonContent(ref="#/components/schemas/Article")
+     *     ),
+     *     @OA\Response(response=400, description="Bad request"),
+     * )
+     *
+     * Update article
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -91,10 +175,29 @@ class ArticleController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *      path="/articles/{id}",
+     *      operationId="deleteArticle",
+     *      tags={"article"},
+     *      summary="Delete article",
+     *      @OA\Parameter(
+     *          in="path",
+     *          name="id",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=204,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     * )
+     * Remove article
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return int
      */
     public function destroy(int $id)
     {

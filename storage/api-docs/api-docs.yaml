@@ -13,6 +13,97 @@ servers:
     url: 'http://localhost/api'
     description: 'L5 Swagger OpenApi dynamic host server'
 paths:
+  /articles:
+    get:
+      tags:
+        - article
+      summary: 'Get list of all articles'
+      operationId: getArticles
+      responses:
+        200:
+          description: 'successful operation'
+        400:
+          description: 'Bad request'
+    post:
+      tags:
+        - article
+      description: 'Create an article'
+      operationId: createArticle
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Article'
+      responses:
+        201:
+          description: 'successful operation'
+        400:
+          description: 'Bad request'
+  '/articles/{id}':
+    get:
+      tags:
+        - article
+      summary: 'Get article by id'
+      operationId: getArticle
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+        400:
+          description: 'Bad request'
+    put:
+      tags:
+        - article
+      summary: 'Update article'
+      operationId: updateArticle
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Article'
+      responses:
+        200:
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+        400:
+          description: 'Bad request'
+    delete:
+      tags:
+        - article
+      summary: 'Delete article'
+      operationId: deleteArticle
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: 'successful operation'
+        400:
+          description: 'Bad request'
   /categories:
     get:
       tags:
@@ -202,14 +293,15 @@ components:
       properties:
         id:
           type: integer
+          readOnly: 'true'
         title:
           type: string
         content:
           type: string
-        author_id:
+        author:
           description: 'The author of the article'
           type: integer
-        category_id:
+        category:
           description: 'The category of the article'
           type: integer
       type: object
@@ -281,6 +373,12 @@ components:
           type: string
       type: object
 tags:
+  -
+    name: article
+    description: 'Operations about article'
+    externalDocs:
+      description: 'Find out more about'
+      url: 'http://swagger.io'
   -
     name: category
     description: 'Operations about category'

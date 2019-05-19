@@ -28,7 +28,11 @@ class UserController extends Controller
      *      description="Returns list of users",
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
+     *          @OA\Schema(
+     *              type="array",
+     *              items={@OA\Schema(ref="#/components/schemas/User")}
+     *          )
      *       ),
      *       @OA\Response(response=400, description="Bad request"),
      * )
@@ -97,9 +101,17 @@ class UserController extends Controller
      *      tags={"user"},
      *      summary="Get user by id",
      *      description="Return user",
+     *      @OA\Parameter(
+     *          in="path",
+     *          name="id",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="successful operation"
+     *          description="successful operation",
      *          @OA\JsonContent(ref="#/components/schemas/User"),
      *       ),
      *       @OA\Response(response=400, description="Bad request"),
@@ -116,6 +128,30 @@ class UserController extends Controller
     }
 
     /**
+     *
+     * @OA\Put(
+     *     path="/users/{id}",
+     *     tags={"user"},
+     *     summary="Update user",
+     *     description="Update an user",
+     *     operationId="UpdateUser",
+     *     @OA\Parameter(
+     *          in="path",
+     *          name="id",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/User"),
+     *     ),
+     *     @OA\RequestBody(
+     *          @OA\JsonContent(ref="#/components/schemas/User")
+     *     )
+     * )
      * Update User
      *
      * @param Request $request
@@ -152,6 +188,27 @@ class UserController extends Controller
 
 
     /**
+     *
+     *  @OA\Delete(
+     *      path="/users/{id}",
+     *      operationId="deleteUser",
+     *      tags={"user"},
+     *      summary="Delete user",
+     *      description="Delete user",
+     *      @OA\Parameter(
+     *          in="path",
+     *          name="id",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=204,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     * )
      * Destroy User
      *
      * @param int $id

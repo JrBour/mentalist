@@ -67,8 +67,90 @@
                 "summary": "Get user by id",
                 "description": "Return user",
                 "operationId": "getUser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Update user",
+                "description": "Update an user",
+                "operationId": "UpdateUser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Delete user",
+                "description": "Delete user",
+                "operationId": "deleteUser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
                         "description": "successful operation"
                     },
                     "400": {
@@ -176,7 +258,8 @@
                 ],
                 "properties": {
                     "id": {
-                        "type": "integer"
+                        "type": "integer",
+                        "readOnly": "true"
                     },
                     "firstname": {
                         "type": "string"
@@ -191,7 +274,8 @@
                         "type": "string"
                     },
                     "email_hashed": {
-                        "type": "string"
+                        "type": "string",
+                        "readOnly": "true"
                     },
                     "password": {
                         "type": "string"

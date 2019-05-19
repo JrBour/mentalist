@@ -195,6 +195,97 @@ paths:
           description: 'successful operation'
         400:
           description: 'Bad request'
+  /comments:
+    get:
+      tags:
+        - comment
+      summary: 'Get list of all comments'
+      operationId: getComments
+      responses:
+        200:
+          description: 'successful operation'
+        400:
+          description: 'Bad request'
+    post:
+      tags:
+        - comment
+      description: 'Create a comment'
+      operationId: createComment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+      responses:
+        201:
+          description: 'successful operation'
+        400:
+          description: 'Bad request'
+  '/comments/{id}':
+    get:
+      tags:
+        - comment
+      summary: 'Get comment by id'
+      operationId: getComment
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        400:
+          description: 'Bad request'
+    put:
+      tags:
+        - comment
+      summary: 'Update comment'
+      operationId: updateComments
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+      responses:
+        200:
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        400:
+          description: 'Bad request'
+    delete:
+      tags:
+        - comment
+      summary: 'Delete comment'
+      operationId: deleteComment
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: 'successful operation'
+        400:
+          description: 'Bad request'
   /users:
     get:
       tags:
@@ -326,10 +417,10 @@ components:
           readOnly: 'true'
         content:
           type: string
-        article_id:
+        article:
           description: 'The article related to comment'
           type: integer
-        author_id:
+        author:
           description: 'The author of the comment'
           type: integer
       type: object
@@ -382,6 +473,12 @@ tags:
   -
     name: category
     description: 'Operations about category'
+    externalDocs:
+      description: 'Find out more about'
+      url: 'http://swagger.io'
+  -
+    name: comment
+    description: 'Operations about comment'
     externalDocs:
       description: 'Find out more about'
       url: 'http://swagger.io'

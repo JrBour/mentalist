@@ -169,7 +169,6 @@ class CommentController extends Controller
         return $comment;
     }
 
-
     /**
      *  @OA\Delete(
      *      path="/comments/{id}",

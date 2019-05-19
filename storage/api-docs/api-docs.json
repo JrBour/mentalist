@@ -442,6 +442,147 @@
                 }
             }
         },
+        "/likes": {
+            "get": {
+                "tags": [
+                    "like"
+                ],
+                "summary": "Get list of all likes",
+                "operationId": "getLikes",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "like"
+                ],
+                "description": "Create a like",
+                "operationId": "createLike",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Like"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/likes/{id}": {
+            "get": {
+                "tags": [
+                    "like"
+                ],
+                "summary": "Get like by id",
+                "operationId": "getLike",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Like"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "like"
+                ],
+                "summary": "Update like",
+                "operationId": "updateLike",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Like"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Like"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "like"
+                ],
+                "summary": "Delete like",
+                "operationId": "deleteLike",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        },
         "/users": {
             "get": {
                 "tags": [
@@ -656,13 +797,14 @@
                 ],
                 "properties": {
                     "id": {
-                        "type": "integer"
+                        "type": "integer",
+                        "readOnly": "true"
                     },
-                    "article_id": {
+                    "article": {
                         "description": "The article related to like",
                         "type": "integer"
                     },
-                    "user_id": {
+                    "user": {
                         "description": "The user related to like",
                         "type": "integer"
                     }
@@ -726,6 +868,14 @@
         {
             "name": "comment",
             "description": "Operations about comment",
+            "externalDocs": {
+                "description": "Find out more about",
+                "url": "http://swagger.io"
+            }
+        },
+        {
+            "name": "like",
+            "description": "Operations about like",
             "externalDocs": {
                 "description": "Find out more about",
                 "url": "http://swagger.io"

@@ -11,6 +11,9 @@ dev:
 start:
 	(cd laradock; docker-compose up -d php-fpm nginx postgres adminer)
 
+bash:
+	docker exec -ti $(workspace_container) bash
+
 stop:
 	(cd laradock; docker-compose down)
 

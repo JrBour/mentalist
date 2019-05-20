@@ -6,12 +6,38 @@ use Illuminate\Http\Request;
 use App\Category;
 use Illuminate\Support\Facades\Validator;
 
+
+/**
+ * @OA\Tag(
+ *     name="category",
+ *     description="Operations about category",
+ *     @OA\ExternalDocumentation(
+ *         description="Find out more about",
+ *         url="http://swagger.io"
+ *     )
+ * )
+ */
 class CategoryController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *      path="/categories",
+     *      operationId="getCategories",
+     *      tags={"category"},
+     *      summary="Get list of all categories",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\Schema(
+     *              type="array",
+     *              items={@OA\Schema(ref="#/components/schemas/Category")}
+     *          )
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     * )
+     * Retrieve all categories
      *
-     * @return \Illuminate\Http\Response
+     * @return Category[]|\Illuminate\Database\Eloquent\Collection
      */
     public function index()
     {
@@ -19,10 +45,24 @@ class CategoryController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/categories",
+     *     tags={"category"},
+     *     description="Create a category",
+     *     operationId="createCategory",
+     *     @OA\Response(
+     *         response=201,
+     *         description="successful operation"
+     *     ),
+     *     @OA\RequestBody(
+     *          @OA\JsonContent(ref="#/components/schemas/Category")
+     *     ),
+     *     @OA\Response(response=400, description="Bad request")
+     * )
+     * Create category
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Category|\Illuminate\Support\MessageBag
      */
     public function store(Request $request)
     {
@@ -42,7 +82,27 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *      path="/categories/{id}",
+     *      operationId="getCategory",
+     *      tags={"category"},
+     *      summary="Get category by id",
+     *      @OA\Parameter(
+     *          in="path",
+     *          name="id",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/Category"),
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     * )
+     * Get category by id
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -53,7 +113,30 @@ class CategoryController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Put(
+     *     path="/categories/{id}",
+     *     tags={"category"},
+     *     summary="Update category",
+     *     operationId="UpdateCategory",
+     *     @OA\Parameter(
+     *          in="path",
+     *          name="id",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/Category"),
+     *     ),
+     *     @OA\RequestBody(
+     *          @OA\JsonContent(ref="#/components/schemas/Category")
+     *     ),
+     *     @OA\Response(response=400, description="Bad request"),
+     * )
+     * Update category.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -77,10 +160,28 @@ class CategoryController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     *  @OA\Delete(
+     *      path="/categories/{id}",
+     *      operationId="deleteCategory",
+     *      tags={"category"},
+     *      summary="Delete category",
+     *      @OA\Parameter(
+     *          in="path",
+     *          name="id",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=204,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     * )
+     * Remove category
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
      */
     public function destroy(int $id)
     {

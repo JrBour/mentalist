@@ -1,0 +1,588 @@
+openapi: 3.0.0
+info:
+  title: Mentalist
+  description: 'The mentalist API documentation'
+  contact:
+    email: darius@matulionis.lt
+  license:
+    name: 'Apache 2.0'
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost/api'
+    description: 'L5 Swagger OpenApi dynamic host server'
+paths:
+  /articles:
+    get:
+      tags:
+        - article
+      summary: 'Get list of all articles'
+      operationId: getArticles
+      responses:
+        200:
+          description: 'successful operation'
+        400:
+          description: 'Bad request'
+    post:
+      tags:
+        - article
+      description: 'Create an article'
+      operationId: createArticle
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Article'
+      responses:
+        201:
+          description: 'successful operation'
+        400:
+          description: 'Bad request'
+  '/articles/{id}':
+    get:
+      tags:
+        - article
+      summary: 'Get article by id'
+      operationId: getArticle
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+        400:
+          description: 'Bad request'
+    put:
+      tags:
+        - article
+      summary: 'Update article'
+      operationId: updateArticle
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Article'
+      responses:
+        200:
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+        400:
+          description: 'Bad request'
+    delete:
+      tags:
+        - article
+      summary: 'Delete article'
+      operationId: deleteArticle
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: 'successful operation'
+        400:
+          description: 'Bad request'
+  /categories:
+    get:
+      tags:
+        - category
+      summary: 'Get list of all categories'
+      operationId: getCategories
+      responses:
+        200:
+          description: 'successful operation'
+        400:
+          description: 'Bad request'
+    post:
+      tags:
+        - category
+      description: 'Create a category'
+      operationId: createCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+      responses:
+        201:
+          description: 'successful operation'
+        400:
+          description: 'Bad request'
+  '/categories/{id}':
+    get:
+      tags:
+        - category
+      summary: 'Get category by id'
+      operationId: getCategory
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        400:
+          description: 'Bad request'
+    put:
+      tags:
+        - category
+      summary: 'Update category'
+      operationId: UpdateCategory
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+      responses:
+        200:
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        400:
+          description: 'Bad request'
+    delete:
+      tags:
+        - category
+      summary: 'Delete category'
+      operationId: deleteCategory
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: 'successful operation'
+        400:
+          description: 'Bad request'
+  /comments:
+    get:
+      tags:
+        - comment
+      summary: 'Get list of all comments'
+      operationId: getComments
+      responses:
+        200:
+          description: 'successful operation'
+        400:
+          description: 'Bad request'
+    post:
+      tags:
+        - comment
+      description: 'Create a comment'
+      operationId: createComment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+      responses:
+        201:
+          description: 'successful operation'
+        400:
+          description: 'Bad request'
+  '/comments/{id}':
+    get:
+      tags:
+        - comment
+      summary: 'Get comment by id'
+      operationId: getComment
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        400:
+          description: 'Bad request'
+    put:
+      tags:
+        - comment
+      summary: 'Update comment'
+      operationId: updateComments
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+      responses:
+        200:
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        400:
+          description: 'Bad request'
+    delete:
+      tags:
+        - comment
+      summary: 'Delete comment'
+      operationId: deleteComment
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: 'successful operation'
+        400:
+          description: 'Bad request'
+  /likes:
+    get:
+      tags:
+        - like
+      summary: 'Get list of all likes'
+      operationId: getLikes
+      responses:
+        200:
+          description: 'successful operation'
+        400:
+          description: 'Bad request'
+    post:
+      tags:
+        - like
+      description: 'Create a like'
+      operationId: createLike
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Like'
+      responses:
+        201:
+          description: 'successful operation'
+        400:
+          description: 'Bad request'
+  '/likes/{id}':
+    get:
+      tags:
+        - like
+      summary: 'Get like by id'
+      operationId: getLike
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Like'
+        400:
+          description: 'Bad request'
+    put:
+      tags:
+        - like
+      summary: 'Update like'
+      operationId: updateLike
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Like'
+      responses:
+        200:
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Like'
+        400:
+          description: 'Bad request'
+    delete:
+      tags:
+        - like
+      summary: 'Delete like'
+      operationId: deleteLike
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: 'successful operation'
+        400:
+          description: 'Bad request'
+  /users:
+    get:
+      tags:
+        - user
+      summary: 'Get list of all users'
+      operationId: getUsersList
+      responses:
+        200:
+          description: 'successful operation'
+        400:
+          description: 'Bad request'
+    post:
+      tags:
+        - user
+      summary: 'Create an user'
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        201:
+          description: 'successful operation'
+  '/users/{id}':
+    get:
+      tags:
+        - user
+      summary: 'Get user by id'
+      operationId: getUser
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: 'Bad request'
+    put:
+      tags:
+        - user
+      summary: 'Update an user'
+      operationId: UpdateUser
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    delete:
+      tags:
+        - user
+      summary: 'Delete an user'
+      operationId: deleteUser
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: 'successful operation'
+        400:
+          description: 'Bad request'
+components:
+  schemas:
+    Article:
+      required:
+        - title
+        - content
+        - author_id
+        - category_id
+      properties:
+        id:
+          type: integer
+          readOnly: 'true'
+        title:
+          type: string
+        content:
+          type: string
+        author:
+          description: 'The author of the article'
+          type: integer
+        category:
+          description: 'The category of the article'
+          type: integer
+      type: object
+    Category:
+      required:
+        - name
+      properties:
+        id:
+          type: integer
+          readOnly: 'true'
+        name:
+          type: string
+      type: object
+    Comment:
+      required:
+        - content
+        - article_id
+        - author_id
+      properties:
+        id:
+          type: integer
+          readOnly: 'true'
+        content:
+          type: string
+        article:
+          description: 'The article related to comment'
+          type: integer
+        author:
+          description: 'The author of the comment'
+          type: integer
+      type: object
+    Like:
+      required:
+        - article_id
+        - user_id
+      properties:
+        id:
+          type: integer
+          readOnly: 'true'
+        article:
+          description: 'The article related to like'
+          type: integer
+        user:
+          description: 'The user related to like'
+          type: integer
+      type: object
+    User:
+      required:
+        - firstname
+        - username
+        - name
+        - email
+        - password
+      properties:
+        id:
+          type: integer
+          readOnly: 'true'
+        firstname:
+          type: string
+        username:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        email_hashed:
+          type: string
+          readOnly: 'true'
+        password:
+          type: string
+      type: object
+tags:
+  -
+    name: article
+    description: 'Operations about article'
+    externalDocs:
+      description: 'Find out more about'
+      url: 'http://swagger.io'
+  -
+    name: category
+    description: 'Operations about category'
+    externalDocs:
+      description: 'Find out more about'
+      url: 'http://swagger.io'
+  -
+    name: comment
+    description: 'Operations about comment'
+    externalDocs:
+      description: 'Find out more about'
+      url: 'http://swagger.io'
+  -
+    name: like
+    description: 'Operations about like'
+    externalDocs:
+      description: 'Find out more about'
+      url: 'http://swagger.io'
+  -
+    name: user
+    description: 'Operations about user'
+    externalDocs:
+      description: 'Find out more about'
+      url: 'http://swagger.io'

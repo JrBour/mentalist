@@ -4,6 +4,17 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @OA\Schema(
+ *     type="object",
+ *     required={"title", "content", "author_id", "category_id"},
+ *      @OA\Property(property="id", type="integer", readOnly="true"),
+ *      @OA\Property(property="title", type="string"),
+ *      @OA\Property(property="content", type="string"),
+ *      @OA\Property(property="author", type="integer", description="The author of the article"),
+ *      @OA\Property(property="category", type="integer", description="The category of the article")
+ * )
+ */
 class Article extends Model
 {
     protected $fillable = ['title', 'content', 'author_id', 'category_id'];

@@ -7,9 +7,35 @@ use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * @OA\Tag(
+ *     name="user",
+ *     description="Operations about user",
+ *     @OA\ExternalDocumentation(
+ *         description="Find out more about",
+ *         url="http://swagger.io"
+ *     )
+ * )
+ */
 class UserController extends Controller
 {
     /**
+     * @OA\Get(
+     *      path="/users",
+     *      operationId="getUsersList",
+     *      tags={"user"},
+     *      summary="Get list of all users",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\Schema(
+     *              type="array",
+     *              items={@OA\Schema(ref="#/components/schemas/User")}
+     *          )
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     * )
+     *
      * Retrieve a User collection
      *
      * @return User[]|\Illuminate\Database\Eloquent\Collection
@@ -20,6 +46,20 @@ class UserController extends Controller
     }
 
     /**
+     * @OA\Post(
+     *     path="/users",
+     *     tags={"user"},
+     *     summary="Create an user",
+     *     operationId="createUser",
+     *     @OA\Response(
+     *         response=201,
+     *         description="successful operation"
+     *     ),
+     *     @OA\RequestBody(
+     *          @OA\JsonContent(ref="#/components/schemas/User")
+     *     )
+     * )
+     *
      * Create User
      *
      * @param Request $request
@@ -53,6 +93,27 @@ class UserController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *      path="/users/{id}",
+     *      operationId="getUser",
+     *      tags={"user"},
+     *      summary="Get user by id",
+     *      @OA\Parameter(
+     *          in="path",
+     *          name="id",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/User"),
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     * )
+     *
      * Retrieve single User
      *
      * @param  int  $id
@@ -64,6 +125,28 @@ class UserController extends Controller
     }
 
     /**
+     * @OA\Put(
+     *     path="/users/{id}",
+     *     tags={"user"},
+     *     summary="Update an user",
+     *     operationId="UpdateUser",
+     *     @OA\Parameter(
+     *          in="path",
+     *          name="id",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/User"),
+     *     ),
+     *     @OA\RequestBody(
+     *          @OA\JsonContent(ref="#/components/schemas/User")
+     *     )
+     * )
      * Update User
      *
      * @param Request $request
@@ -100,6 +183,25 @@ class UserController extends Controller
 
 
     /**
+     *  @OA\Delete(
+     *      path="/users/{id}",
+     *      operationId="deleteUser",
+     *      tags={"user"},
+     *      summary="Delete an user",
+     *      @OA\Parameter(
+     *          in="path",
+     *          name="id",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=204,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     * )
      * Destroy User
      *
      * @param int $id

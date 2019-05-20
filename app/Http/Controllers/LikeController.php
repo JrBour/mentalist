@@ -8,24 +8,63 @@ use App\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-
+/**
+ * @OA\Tag(
+ *     name="like",
+ *     description="Operations about like",
+ *     @OA\ExternalDocumentation(
+ *         description="Find out more about",
+ *         url="http://swagger.io"
+ *     )
+ * )
+ */
 class LikeController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *      path="/likes",
+     *      operationId="getLikes",
+     *      tags={"like"},
+     *      summary="Get list of all likes",
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\Schema(
+     *              type="array",
+     *              items={@OA\Schema(ref="#/components/schemas/Like")}
+     *          )
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     * )
+     * Retrieve all likes
      *
-     * @return \Illuminate\Http\Response
+     * @return Like[]|\Illuminate\Database\Eloquent\Collection
      */
     public function index()
     {
         return Like::all();
     }
 
+
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/likes",
+     *     tags={"like"},
+     *     description="Create a like",
+     *     operationId="createLike",
+     *     @OA\Response(
+     *         response=201,
+     *         description="successful operation"
+     *     ),
+     *     @OA\RequestBody(
+     *          @OA\JsonContent(ref="#/components/schemas/Like")
+     *     ),
+     *     @OA\Response(response=400, description="Bad request")
+     * )
+     * Create likes
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Like|\Illuminate\Support\MessageBag
      */
     public function store(Request $request)
     {
@@ -47,7 +86,27 @@ class LikeController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *      path="/likes/{id}",
+     *      operationId="getLike",
+     *      tags={"like"},
+     *      summary="Get like by id",
+     *      @OA\Parameter(
+     *          in="path",
+     *          name="id",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/Like"),
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     * )
+     * Get like by id
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -58,7 +117,30 @@ class LikeController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Put(
+     *     path="/likes/{id}",
+     *     tags={"like"},
+     *     summary="Update like",
+     *     operationId="updateLike",
+     *     @OA\Parameter(
+     *          in="path",
+     *          name="id",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/Like"),
+     *     ),
+     *     @OA\RequestBody(
+     *          @OA\JsonContent(ref="#/components/schemas/Like")
+     *     ),
+     *     @OA\Response(response=400, description="Bad request"),
+     * )
+     * Update like
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -84,10 +166,29 @@ class LikeController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     *  @OA\Delete(
+     *      path="/likes/{id}",
+     *      operationId="deleteLike",
+     *      tags={"like"},
+     *      summary="Delete like",
+     *      @OA\Parameter(
+     *          in="path",
+     *          name="id",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=204,
+     *          description="successful operation"
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     * )
+     * Remove like
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return int
      */
     public function destroy(int $id)
     {

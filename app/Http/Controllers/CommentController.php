@@ -29,6 +29,14 @@ class CommentController extends Controller
      *      operationId="getComments",
      *      tags={"comment"},
      *      summary="Get list of all comments",
+     *     @OA\Parameter(
+     *          in="query",
+     *          name="page",
+     *          required=false,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
      *      @OA\Response(
      *          response=200,
      *          description="successful operation",

@@ -27,6 +27,14 @@ class UserController extends Controller
      *      operationId="getUsersList",
      *      tags={"user"},
      *      summary="Get list of all users",
+     *     @OA\Parameter(
+     *          in="query",
+     *          name="page",
+     *          required=false,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
      *      @OA\Response(
      *          response=200,
      *          description="successful operation",

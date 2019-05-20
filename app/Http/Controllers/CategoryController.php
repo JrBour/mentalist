@@ -26,6 +26,14 @@ class CategoryController extends Controller
      *      operationId="getCategories",
      *      tags={"category"},
      *      summary="Get list of all categories",
+     *     @OA\Parameter(
+     *          in="query",
+     *          name="page",
+     *          required=false,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
      *      @OA\Response(
      *          response=200,
      *          description="successful operation",

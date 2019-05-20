@@ -28,6 +28,14 @@ class ArticleController extends Controller
      *      operationId="getArticles",
      *      tags={"article"},
      *      summary="Get list of all articles",
+     *     @OA\Parameter(
+     *          in="query",
+     *          name="page",
+     *          required=false,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
      *      @OA\Response(
      *          response=200,
      *          description="successful operation",

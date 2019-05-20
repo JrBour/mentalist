@@ -28,6 +28,14 @@ class LikeController extends Controller
      *      operationId="getLikes",
      *      tags={"like"},
      *      summary="Get list of all likes",
+     *     @OA\Parameter(
+     *          in="query",
+     *          name="page",
+     *          required=false,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
      *      @OA\Response(
      *          response=200,
      *          description="successful operation",

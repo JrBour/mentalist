@@ -6,6 +6,7 @@ use App\User;
 use App\Article;
 use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Validator;
  */
 class ArticleController extends Controller
 {
+
     /**
      * @OA\Get(
      *      path="/articles",
@@ -36,13 +38,13 @@ class ArticleController extends Controller
      *       ),
      *       @OA\Response(response=400, description="Bad request"),
      * )
-     * Retrieve all categories
+     * Retrieve all articles
      *
-     * @return Article[]|\Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function index()
     {
-        return Article::all();
+        return DB::table('articles')->paginate(15);;
     }
 
     /**

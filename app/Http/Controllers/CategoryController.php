@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -36,12 +37,11 @@ class CategoryController extends Controller
      *       @OA\Response(response=400, description="Bad request"),
      * )
      * Retrieve all categories
-     *
-     * @return Category[]|\Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function index()
     {
-        return Category::all();
+        return DB::table('categories')->paginate(15);
     }
 
     /**

@@ -157,9 +157,9 @@ class ArticleController extends Controller
      *
      * Update article
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param int $id
+     * @return \Illuminate\Support\MessageBag
      */
     public function update(Request $request, int $id)
     {

@@ -41,8 +41,7 @@ class CategoryController extends Controller
      *              type="array",
      *              items={@OA\Schema(ref="#/components/schemas/Category")}
      *          )
-     *       ),
-     *       @OA\Response(response=400, description="Bad request"),
+     *       )
      * )
      * Retrieve all categories
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator

@@ -21,6 +21,12 @@ class CategoryTest extends TestCase
         ]);
     }
 
+    public function testCategoryShowFailed()
+    {
+        $response = $this->json('GET', route('categories.show', ['category' => 999]));
+        $response->assertStatus(404);
+    }
+
     public function testCategoryShowList()
     {
         $response = $this->get(route('categories.index'));

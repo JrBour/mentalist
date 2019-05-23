@@ -51,7 +51,6 @@ class CategoryController extends Controller
         return DB::table('categories')->paginate(15);
     }
 
-
     /**
      * @OA\Post(
      *     path="/categories",
@@ -112,12 +111,16 @@ class CategoryController extends Controller
      * )
      * Get category by id
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(int $id)
     {
-        return Category::find($id);
+        if (Category::find($id) !== null) {
+            return Category::find($id);
+        } else {
+            return Response::json([], 404);
+        }
     }
 
     /**

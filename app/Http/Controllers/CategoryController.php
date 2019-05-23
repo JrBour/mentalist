@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-
 
 /**
  * @OA\Tag(
@@ -85,7 +85,7 @@ class CategoryController extends Controller
 
         $category->save();
 
-        return $category;
+        return Response::json($category, 201);
     }
 
     /**
@@ -189,9 +189,12 @@ class CategoryController extends Controller
      * Remove category
      *
      * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(int $id)
     {
         Category::destroy($id);
+
+        return Response::json([],204);
     }
 }

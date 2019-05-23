@@ -51,6 +51,7 @@ class CategoryController extends Controller
         return DB::table('categories')->paginate(15);
     }
 
+
     /**
      * @OA\Post(
      *     path="/categories",
@@ -69,7 +70,7 @@ class CategoryController extends Controller
      * Create category
      *
      * @param Request $request
-     * @return Category|\Illuminate\Support\MessageBag
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Support\MessageBag
      */
     public function store(Request $request)
     {

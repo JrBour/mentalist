@@ -7,6 +7,7 @@ use App\Article;
 use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -56,7 +57,7 @@ class ArticleController extends Controller
     }
 
     /**
-     *  @OA\Post(
+     * @OA\Post(
      *     path="/articles",
      *     tags={"article"},
      *     description="Create an article",
@@ -74,7 +75,7 @@ class ArticleController extends Controller
      * Create article
      *
      * @param Request $request
-     * @return Article|\Illuminate\Support\MessageBag
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Support\MessageBag
      */
     public function store(Request $request)
     {
@@ -96,7 +97,7 @@ class ArticleController extends Controller
 
         $article->save();
 
-        return $article;
+        return Response::json($article,201);
     }
 
     /**
@@ -207,10 +208,12 @@ class ArticleController extends Controller
      * Remove article
      *
      * @param int $id
-     * @return int
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(int $id)
     {
-        return Article::destroy($id);
+        Article::destroy($id);
+
+        return Response::json([],204);
     }
 }

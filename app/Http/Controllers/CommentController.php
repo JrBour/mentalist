@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use App\Comment;
 use App\User;
@@ -56,6 +57,7 @@ class CommentController extends Controller
         return DB::table('comments')->paginate(15);
     }
 
+
     /**
      * @OA\Post(
      *     path="/comments",
@@ -74,7 +76,7 @@ class CommentController extends Controller
      * Create comment
      *
      * @param Request $request
-     * @return Comment|\Illuminate\Support\MessageBag
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Support\MessageBag
      */
     public function store(Request $request)
     {
@@ -94,7 +96,8 @@ class CommentController extends Controller
 
         $comment->save();
 
-        return $comment;
+        return Response::json($comment, 201);
+
     }
 
     /**
@@ -202,10 +205,12 @@ class CommentController extends Controller
      * Remove comment
      *
      * @param int $id
-     * @return int
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(int $id)
     {
-        return Comment::destroy($id);
+        Comment::destroy($id);
+
+        return Response::json([],204);
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -72,7 +73,7 @@ class UserController extends Controller
      * Create User
      *
      * @param Request $request
-     * @return User|\Illuminate\Support\MessageBag
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Support\MessageBag
      */
     public function store(Request $request)
     {
@@ -98,7 +99,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return $user;
+        return Response::json($user,201);
     }
 
     /**
@@ -190,9 +191,8 @@ class UserController extends Controller
         return $user;
     }
 
-
     /**
-     *  @OA\Delete(
+     * @OA\Delete(
      *      path="/users/{id}",
      *      operationId="deleteUser",
      *      tags={"user"},
@@ -214,9 +214,12 @@ class UserController extends Controller
      * Destroy User
      *
      * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(int $id)
     {
         User::destroy($id);
+
+        return Response::json([],201);
     }
 }

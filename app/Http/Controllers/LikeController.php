@@ -7,6 +7,7 @@ use App\User;
 use App\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -54,7 +55,6 @@ class LikeController extends Controller
         return DB::table('likes')->paginate(15);
     }
 
-
     /**
      * @OA\Post(
      *     path="/likes",
@@ -73,7 +73,7 @@ class LikeController extends Controller
      * Create likes
      *
      * @param Request $request
-     * @return Like|\Illuminate\Support\MessageBag
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Support\MessageBag
      */
     public function store(Request $request)
     {
@@ -91,7 +91,7 @@ class LikeController extends Controller
 
         $like->save();
 
-        return $like;
+        return Response::json($like,201);
     }
 
     /**
@@ -175,7 +175,7 @@ class LikeController extends Controller
     }
 
     /**
-     *  @OA\Delete(
+     * @OA\Delete(
      *      path="/likes/{id}",
      *      operationId="deleteLike",
      *      tags={"like"},
@@ -197,10 +197,12 @@ class LikeController extends Controller
      * Remove like
      *
      * @param int $id
-     * @return int
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(int $id)
     {
-        return Like::destroy($id);
+        Like::destroy($id);
+
+        return Response::json([],204);
     }
 }

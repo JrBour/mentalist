@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Comment;
 use App\User;
@@ -21,12 +22,21 @@ use App\Article;
  */
 class CommentController extends Controller
 {
+
     /**
      * @OA\Get(
      *      path="/comments",
      *      operationId="getComments",
      *      tags={"comment"},
      *      summary="Get list of all comments",
+     *     @OA\Parameter(
+     *          in="query",
+     *          name="page",
+     *          required=false,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
      *      @OA\Response(
      *          response=200,
      *          description="successful operation",
@@ -39,11 +49,11 @@ class CommentController extends Controller
      * )
      * Retrieve all comments
      *
-     * @return Comment[]|\Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function index()
     {
-        return Comment::all();
+        return DB::table('comments')->paginate(15);
     }
 
     /**

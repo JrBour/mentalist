@@ -6,6 +6,7 @@ use App\Like;
 use App\User;
 use App\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -20,12 +21,21 @@ use Illuminate\Support\Facades\Validator;
  */
 class LikeController extends Controller
 {
+
     /**
-     * @OA\Get(
+     * * @OA\Get(
      *      path="/likes",
      *      operationId="getLikes",
      *      tags={"like"},
      *      summary="Get list of all likes",
+     *     @OA\Parameter(
+     *          in="query",
+     *          name="page",
+     *          required=false,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
      *      @OA\Response(
      *          response=200,
      *          description="successful operation",
@@ -37,12 +47,11 @@ class LikeController extends Controller
      *       @OA\Response(response=400, description="Bad request"),
      * )
      * Retrieve all likes
-     *
-     * @return Like[]|\Illuminate\Database\Eloquent\Collection
+     * @return mixed
      */
     public function index()
     {
-        return Like::all();
+        return DB::table('likes')->paginate(15);
     }
 
 

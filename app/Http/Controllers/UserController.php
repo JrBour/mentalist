@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,12 +20,21 @@ use Illuminate\Support\Facades\Validator;
  */
 class UserController extends Controller
 {
+
     /**
-     * @OA\Get(
+     * * @OA\Get(
      *      path="/users",
      *      operationId="getUsersList",
      *      tags={"user"},
      *      summary="Get list of all users",
+     *     @OA\Parameter(
+     *          in="query",
+     *          name="page",
+     *          required=false,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
      *      @OA\Response(
      *          response=200,
      *          description="successful operation",
@@ -35,14 +45,13 @@ class UserController extends Controller
      *       ),
      *       @OA\Response(response=400, description="Bad request"),
      * )
+     * Retrieve all users
      *
-     * Retrieve a User collection
-     *
-     * @return User[]|\Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function index()
     {
-        return User::all();
+        return DB::table('users')->paginate(15);
     }
 
     /**

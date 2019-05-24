@@ -163,6 +163,8 @@ class CategoryController extends Controller
             return $validation->errors();
 
         $category = Category::find($id);
+        if (Category::find($id) === null)
+            return Response::json([], 404);
         $category->name = $request->name;
 
         $category->save();

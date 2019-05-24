@@ -71,6 +71,15 @@ class CategoryTest extends TestCase
             ]);
     }
 
+    public function testCategoryUpdateFail()
+    {
+        $data = [
+            'name' => 'Pipoute'
+        ];
+        $this->put(route('categories.update', ['category' => 999]), $data)
+            ->assertStatus(404);
+    }
+
     public function testCategoryDelete()
     {
         $category = factory(Category::class)->create();

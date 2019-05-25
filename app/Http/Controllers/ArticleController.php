@@ -82,20 +82,14 @@ class ArticleController extends Controller
         $validation = Validator::make($request->all(), [
             'title' => 'required|string|min:2|max:255',
             'content' => 'required|string|min:2',
-            'author' => 'required|integer',
-            'category' => 'required|integer'
+            'author_id' => 'required|integer',
+            'category_id' => 'required|integer'
         ]);
 
         if ($validation->fails())
             return $validation->errors();
 
-        $article = new Article();
-        $article->title = $request->title;
-        $article->content = $request->content;
-        $article->author()->associate(User::find($request->author));
-        $article->category()->associate(Category::find($request->category));
-
-        $article->save();
+        $article = Article::create($request->only(['title', 'content', 'author_id', 'category_id']));
 
         return Response::json($article,201);
     }
@@ -167,14 +161,14 @@ class ArticleController extends Controller
         $validation = Validator::make($request->all(), [
             'title' => 'required|string|min:2|max:255',
             'content' => 'required|string|min:2',
-            'author' => 'required|integer',
-            'category' => 'required|integer'
+            'author_id' => 'required|integer',
+            'category_id' => 'required|integer'
         ]);
 
         if ($validation->fails())
             return $validation->errors();
 
-        $article->update($request->only(['title', 'content', 'author', 'category']));
+        $article->update($request->only(['title', 'content', 'author_id', 'category_id']));
 
         return $article;
     }

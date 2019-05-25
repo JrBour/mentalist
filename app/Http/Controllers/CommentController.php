@@ -88,17 +88,12 @@ class CommentController extends Controller
 
         if ($validation->fails())
             return $validation->errors();
-
-        $comment = new Comment();
-        $comment->content = $request->content;
-        $comment->author()->associate(User::find($request->author));
-        $comment->article()->associate(Article::find($request->article));
-
-        $comment->save();
+        $comment  = Comment::create($request->only(['content', 'author_id', 'article_id']));
 
         return Response::json($comment, 201);
 
     }
+
 
     /**
      * @OA\Get(
@@ -123,12 +118,12 @@ class CommentController extends Controller
      * )
      * Get comment by id
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Comment $comment
+     * @return Comment
      */
-    public function show(int $id)
+    public function show(Comment $comment)
     {
-        return Comment::find($id);
+        return $comment;
     }
 
     /**
@@ -161,7 +156,7 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, Comment $comment)
     {
         $validation = Validator::make($request->all(), [
             'content' => 'required|string|min:2',
@@ -171,19 +166,13 @@ class CommentController extends Controller
 
         if ($validation->fails())
             return $validation->errors();
-
-        $comment = Comment::find($id);
-        $comment->content = $request->content;
-        $comment->author()->associate(User::find($request->author));
-        $comment->article()->associate(Article::find($request->article));
-
-        $comment->save();
+        $comment->update($request->only(['content', 'author_id', 'article_id']);
 
         return $comment;
     }
 
     /**
-     *  @OA\Delete(
+     * @OA\Delete(
      *      path="/comments/{id}",
      *      operationId="deleteComment",
      *      tags={"comment"},
@@ -204,12 +193,13 @@ class CommentController extends Controller
      * )
      * Remove comment
      *
-     * @param int $id
+     * @param Comment $comment
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
-    public function destroy(int $id)
+    public function destroy(Comment $comment)
     {
-        Comment::destroy($id);
+        $comment->delete();
 
         return Response::json([],204);
     }

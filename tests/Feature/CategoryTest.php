@@ -86,4 +86,10 @@ class CategoryTest extends TestCase
         $this->delete(route('categories.destroy', ['category' => $category->id]))
             ->assertStatus(204);
     }
+
+    public function testCategoryDeleteFail()
+    {
+        $this->delete(route('categories.destroy', ['category' => 999]))
+            ->assertStatus(404);
+    }
 }

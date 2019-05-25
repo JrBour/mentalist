@@ -119,7 +119,7 @@ class CategoryController extends Controller
         if (Category::find($id) !== null) {
             return Category::find($id);
         } else {
-            return Response::json([], 404);
+            return Response::json(['message' => 'Category not found'], 404);
         }
     }
 
@@ -164,7 +164,7 @@ class CategoryController extends Controller
 
         $category = Category::find($id);
         if (Category::find($id) === null)
-            return Response::json([], 404);
+            return Response::json(['message' => 'Category not found'], 404);
         $category->name = $request->name;
 
         $category->save();
@@ -199,6 +199,8 @@ class CategoryController extends Controller
      */
     public function destroy(int $id)
     {
+        if (Category::find($id) === null)
+            return Response::json(['message' => 'Category not found'], 404);
         Category::destroy($id);
 
         return Response::json([],204);

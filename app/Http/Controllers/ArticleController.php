@@ -126,9 +126,9 @@ class ArticleController extends Controller
      * @param int $id
      * @return mixed
      */
-    public function show(int $id)
+    public function show(Article $article)
     {
-        return Article::find($id);
+        return $article;
     }
 
     /**
@@ -148,7 +148,7 @@ class ArticleController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/Article"),
+     *          @OA\JsonContent(ref="#/components/schemas/Article"),Update
      *     ),
      *     @OA\RequestBody(
      *          @OA\JsonContent(ref="#/components/schemas/Article")
@@ -162,7 +162,7 @@ class ArticleController extends Controller
      * @param int $id
      * @return \Illuminate\Support\MessageBag
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, Article $article)
     {
         $validation = Validator::make($request->all(), [
             'title' => 'required|string|min:2|max:255',
@@ -174,13 +174,7 @@ class ArticleController extends Controller
         if ($validation->fails())
             return $validation->errors();
 
-        $article = Article::find($id);
-        $article->title = $request->title;
-        $article->content = $request->content;
-        $article->author()->associate(User::find($request->author));
-        $article->category()->associate(Category::find($request->category));
-
-        $article->save();
+        $article->update($request->only(['title', 'content', 'author', 'category']));
 
         return $article;
     }
@@ -210,9 +204,9 @@ class ArticleController extends Controller
      * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(int $id)
+    public function destroy(Article $article)
     {
-        Article::destroy($id);
+        $article->delete();
 
         return Response::json([],204);
     }

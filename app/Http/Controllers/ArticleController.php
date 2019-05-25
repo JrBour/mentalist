@@ -45,7 +45,6 @@ class ArticleController extends Controller
      *              items={@OA\Schema(ref="#/components/schemas/Article")}
      *          )
      *       ),
-     *       @OA\Response(response=400, description="Bad request"),
      * )
      * Retrieve all articles
      *
@@ -53,7 +52,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        return DB::table('articles')->paginate(15);;
+        return DB::table('articles')->paginate(15);
     }
 
     /**
@@ -113,12 +112,12 @@ class ArticleController extends Controller
      *          description="successful operation",
      *          @OA\JsonContent(ref="#/components/schemas/Article"),
      *       ),
-     *       @OA\Response(response=400, description="Bad request"),
+     *       @OA\Response(response=404, description="Resource not found"),
      * )
      * Get article by id
      *
-     * @param int $id
-     * @return mixed
+     * @param Article $article
+     * @return Article
      */
     public function show(Article $article)
     {
@@ -148,13 +147,14 @@ class ArticleController extends Controller
      *          @OA\JsonContent(ref="#/components/schemas/Article")
      *     ),
      *     @OA\Response(response=400, description="Bad request"),
+     *     @OA\Response(response=404, description="Resource not found"),
      * )
      *
      * Update article
      *
      * @param Request $request
-     * @param int $id
-     * @return \Illuminate\Support\MessageBag
+     * @param Article $article
+     * @return Article|\Illuminate\Support\MessageBag
      */
     public function update(Request $request, Article $article)
     {
@@ -192,11 +192,14 @@ class ArticleController extends Controller
      *          description="successful operation"
      *       ),
      *       @OA\Response(response=400, description="Bad request"),
+     *          *     @OA\Response(response=404, description="Resource not found"),
+
      * )
      * Remove article
      *
-     * @param int $id
+     * @param Article $article
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function destroy(Article $article)
     {

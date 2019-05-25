@@ -186,6 +186,7 @@ class LikeController extends Controller
      *       @OA\Response(response=404, description="Resource not found"),
      * )
      * Remove like
+     *
      * @param Like $like
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception

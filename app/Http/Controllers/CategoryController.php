@@ -115,7 +115,6 @@ class CategoryController extends Controller
         return $category;
     }
 
-
     /**
      * @OA\Put(
      *     path="/categories/{id}",

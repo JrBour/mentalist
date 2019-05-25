@@ -79,11 +79,7 @@ class CategoryController extends Controller
 
         if ($validation->fails())
             return $validation->errors();
-
-        $category = new Category();
-        $category->name = $request->name;
-
-        $category->save();
+        $category = Category::create($request->only(['name']));
 
         return Response::json($category, 201);
     }
@@ -111,17 +107,14 @@ class CategoryController extends Controller
      * )
      * Get category by id
      *
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
+     * @param Category $category
+     * @return Category
      */
-    public function show(int $id)
+    public function show(Category $category)
     {
-        if (Category::find($id) !== null) {
-            return Category::find($id);
-        } else {
-            return Response::json(['message' => 'Category not found'], 404);
-        }
+        return $category;
     }
+
 
     /**
      * @OA\Put(
@@ -147,13 +140,13 @@ class CategoryController extends Controller
      *     ),
      *     @OA\Response(response=400, description="Bad request"),
      * )
-     * Update category.
+     * Update category
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Category $category
+     * @return Category|\Illuminate\Support\MessageBag
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, Category $category)
     {
         $validation = Validator::make($request->all(), [
             'name' => 'required|string|min:2|max:255',
@@ -162,15 +155,11 @@ class CategoryController extends Controller
         if ($validation->fails())
             return $validation->errors();
 
-        $category = Category::find($id);
-        if (Category::find($id) === null)
-            return Response::json(['message' => 'Category not found'], 404);
-        $category->name = $request->name;
-
-        $category->save();
+        $category->update($request->only(['name'));
 
         return $category;
     }
+
 
     /**
      *  @OA\Delete(
@@ -194,14 +183,13 @@ class CategoryController extends Controller
      * )
      * Remove category
      *
-     * @param int $id
+     * @param Category $category
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
-    public function destroy(int $id)
+    public function destroy(Category $category)
     {
-        if (Category::find($id) === null)
-            return Response::json(['message' => 'Category not found'], 404);
-        Category::destroy($id);
+        $category->delete();
 
         return Response::json([],204);
     }

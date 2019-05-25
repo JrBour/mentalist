@@ -155,7 +155,7 @@ class CategoryController extends Controller
         if ($validation->fails())
             return $validation->errors();
 
-        $category->update($request->only(['name']);
+        $category->update($request->only(['name']));
 
         return $category;
     }

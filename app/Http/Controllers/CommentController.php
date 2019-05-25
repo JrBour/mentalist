@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use App\Comment;
-use App\User;
-use App\Article;
 
 
 /**
@@ -82,8 +80,8 @@ class CommentController extends Controller
     {
         $validation = Validator::make($request->all(), [
             'content' => 'required|string|min:2',
-            'author' => 'required|integer',
-            'article' => 'required|integer'
+            'author_id' => 'required|integer',
+            'article_id' => 'required|integer'
         ]);
 
         if ($validation->fails())
@@ -126,6 +124,7 @@ class CommentController extends Controller
         return $comment;
     }
 
+
     /**
      * @OA\Put(
      *     path="/comments/{id}",
@@ -152,21 +151,21 @@ class CommentController extends Controller
      * )
      * Update comment.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Comment $comment
+     * @return Comment|\Illuminate\Support\MessageBag
      */
     public function update(Request $request, Comment $comment)
     {
         $validation = Validator::make($request->all(), [
             'content' => 'required|string|min:2',
-            'author' => 'required|integer',
-            'article' => 'required|integer'
+            'author_id' => 'required|integer',
+            'article_id' => 'required|integer'
         ]);
 
         if ($validation->fails())
             return $validation->errors();
-        $comment->update($request->only(['content', 'author_id', 'article_id']);
+        $comment->update($request->only(['content', 'author_id', 'article_id']));
 
         return $comment;
     }

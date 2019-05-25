@@ -78,18 +78,13 @@ class LikeController extends Controller
     public function store(Request $request)
     {
         $validation = Validator::make($request->all(), [
-            'user' => 'required|integer',
-            'article' => 'required|integer'
+            'user_id' => 'required|integer',
+            'article_id' => 'required|integer'
         ]);
 
         if ($validation->fails())
             return $validation->errors();
-
-        $like = new Like();
-        $like->user()->associate(User::find($request->user));
-        $like->article()->associate(Article::find($request->article));
-
-        $like->save();
+        $like = Like::create($request->only(['user_id', 'article_id']));;
 
         return Response::json($like,201);
     }
@@ -117,12 +112,12 @@ class LikeController extends Controller
      * )
      * Get like by id
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Like $like
+     * @return Like
      */
-    public function show(int $id)
+    public function show(Like $like)
     {
-        return Like::find($id);
+        return $like;
     }
 
     /**
@@ -151,28 +146,24 @@ class LikeController extends Controller
      * )
      * Update like
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Like $like
+     * @return Like|\Illuminate\Support\MessageBag
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, Like $like)
     {
         $validation = Validator::make($request->all(), [
-            'user' => 'required|integer',
-            'article' => 'required|integer'
+            'user_id' => 'required|integer',
+            'article_id' => 'required|integer'
         ]);
 
         if ($validation->fails())
             return $validation->errors();
-
-        $like = Like::find($id);
-        $like->user()->associate(User::find($request->user ));
-        $like->article()->associate(Article::find($request->article));
-
-        $like->save();
+        $like->update($request->only(['user_id', 'article_id']));
 
         return $like;
     }
+
 
     /**
      * @OA\Delete(
@@ -192,16 +183,16 @@ class LikeController extends Controller
      *          response=204,
      *          description="successful operation"
      *       ),
-     *       @OA\Response(response=400, description="Bad request"),
+     *       @OA\Response(response=404, description="Resource not found"),
      * )
      * Remove like
-     *
-     * @param int $id
+     * @param Like $like
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
-    public function destroy(int $id)
+    public function destroy(Like $like)
     {
-        Like::destroy($id);
+        $like->delete();
 
         return Response::json([],204);
     }

@@ -124,14 +124,14 @@ class UserController extends Controller
      *       @OA\Response(response=400, description="Bad request"),
      * )
      *
-     * Retrieve single User
+     * Get user by id
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return User
      */
-    public function show(int $id)
+    public function show(User $user)
     {
-        return User::find($id);
+        return $user;
     }
 
     /**
@@ -160,10 +160,10 @@ class UserController extends Controller
      * Update User
      *
      * @param Request $request
-     * @param int $id
+     * @param User $user
      * @return User|\Illuminate\Support\MessageBag
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, User $user)
     {
         $validation = Validator::make($request->all(), [
             'firstname' => 'required|string|min:2|max:255',
@@ -173,11 +173,9 @@ class UserController extends Controller
             'password' => 'required|string|min:6|max:255'
         ]);
 
-        if ($validation->fails()) {
+        if ($validation->fails())
             return $validation->errors();
-        }
 
-        $user = User::find($id);
         $user->firstname = $request->firstname;
         $user->username= $request->username;
         $user->name = $request->name;
@@ -213,12 +211,13 @@ class UserController extends Controller
      * )
      * Destroy User
      *
-     * @param int $id
+     * @param User $user
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
-    public function destroy(int $id)
+    public function destroy(User $user)
     {
-        User::destroy($id);
+        $user->delete();
 
         return Response::json([],201);
     }

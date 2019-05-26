@@ -164,7 +164,6 @@ class LikeController extends Controller
         return $like;
     }
 
-
     /**
      * @OA\Delete(
      *      path="/likes/{id}",

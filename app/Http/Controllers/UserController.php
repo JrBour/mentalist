@@ -219,6 +219,6 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return Response::json([],201);
+        return Response::json([],204);
     }
 }

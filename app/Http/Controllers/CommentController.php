@@ -44,7 +44,6 @@ class CommentController extends Controller
      *              items={@OA\Schema(ref="#/components/schemas/Comment")}
      *          )
      *       ),
-     *       @OA\Response(response=400, description="Bad request"),
      * )
      * Retrieve all comments
      *

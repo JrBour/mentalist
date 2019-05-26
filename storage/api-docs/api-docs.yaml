@@ -29,8 +29,6 @@ paths:
       responses:
         200:
           description: 'successful operation'
-        400:
-          description: 'Bad request'
     post:
       tags:
         - article
@@ -66,12 +64,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Article'
-        400:
-          description: 'Bad request'
+        404:
+          description: 'Resource not found'
     put:
       tags:
         - article
-      summary: 'Update article'
       operationId: updateArticle
       parameters:
         -
@@ -94,6 +91,8 @@ paths:
                 $ref: '#/components/schemas/Article'
         400:
           description: 'Bad request'
+        404:
+          description: 'Resource not found'
     delete:
       tags:
         - article
@@ -111,6 +110,8 @@ paths:
           description: 'successful operation'
         400:
           description: 'Bad request'
+        404:
+          description: 'Resource not found'
   /categories:
     get:
       tags:
@@ -162,8 +163,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Category'
-        400:
-          description: 'Bad request'
+        404:
+          description: 'Resource not found'
     put:
       tags:
         - category
@@ -190,6 +191,8 @@ paths:
                 $ref: '#/components/schemas/Category'
         400:
           description: 'Bad request'
+        404:
+          description: 'Resource not found'
     delete:
       tags:
         - category
@@ -205,8 +208,8 @@ paths:
       responses:
         204:
           description: 'successful operation'
-        400:
-          description: 'Bad request'
+        404:
+          description: 'Resource not found'
   /comments:
     get:
       tags:
@@ -223,8 +226,6 @@ paths:
       responses:
         200:
           description: 'successful operation'
-        400:
-          description: 'Bad request'
     post:
       tags:
         - comment
@@ -401,8 +402,8 @@ paths:
       responses:
         204:
           description: 'successful operation'
-        400:
-          description: 'Bad request'
+        404:
+          description: 'Resource not found'
   /users:
     get:
       tags:

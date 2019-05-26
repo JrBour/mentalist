@@ -45,7 +45,6 @@ class LikeController extends Controller
      *              items={@OA\Schema(ref="#/components/schemas/Like")}
      *          )
      *       ),
-     *       @OA\Response(response=400, description="Bad request"),
      * )
      * Retrieve all likes
      * @return mixed
@@ -108,7 +107,7 @@ class LikeController extends Controller
      *          description="successful operation",
      *          @OA\JsonContent(ref="#/components/schemas/Like"),
      *       ),
-     *       @OA\Response(response=400, description="Bad request"),
+     *     @OA\Response(response=404, description="Resource not found"),
      * )
      * Get like by id
      *
@@ -143,6 +142,7 @@ class LikeController extends Controller
      *          @OA\JsonContent(ref="#/components/schemas/Like")
      *     ),
      *     @OA\Response(response=400, description="Bad request"),
+     *     @OA\Response(response=404, description="Resource not found"),
      * )
      * Update like
      *

@@ -155,7 +155,9 @@ class UserController extends Controller
      *     ),
      *     @OA\RequestBody(
      *          @OA\JsonContent(ref="#/components/schemas/User")
-     *     )
+     *     ),
+     *     @OA\Response(response=400, description="Bad request"),
+     *     @OA\Response(response=404, description="Resource not found"),
      * )
      * Update User
      *
@@ -207,7 +209,7 @@ class UserController extends Controller
      *          response=204,
      *          description="successful operation"
      *       ),
-     *       @OA\Response(response=400, description="Bad request"),
+     *       @OA\Response(response=404, description="Resource not found"),
      * )
      * Destroy User
      *

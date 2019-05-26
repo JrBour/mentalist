@@ -125,10 +125,9 @@ class ArticleController extends Controller
     }
 
     /**
-     * @OA\Put(
+     *  @OA\Put(
      *     path="/articles/{id}",
      *     tags={"article"},
-     *     summary="Update article",
      *     operationId="updateArticle",
      *     @OA\Parameter(
      *          in="path",
@@ -141,13 +140,13 @@ class ArticleController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/Article"),Update
+     *          @OA\JsonContent(ref="#/components/schemas/Article"),
      *     ),
      *     @OA\RequestBody(
      *          @OA\JsonContent(ref="#/components/schemas/Article")
      *     ),
      *     @OA\Response(response=400, description="Bad request"),
-     *     @OA\Response(response=404, description="Resource not found"),
+     *     @OA\Response(response=404, description="Resource not found")
      * )
      *
      * Update article
@@ -192,8 +191,7 @@ class ArticleController extends Controller
      *          description="successful operation"
      *       ),
      *       @OA\Response(response=400, description="Bad request"),
-     *          *     @OA\Response(response=404, description="Resource not found"),
-
+     *       @OA\Response(response=404, description="Resource not found"),
      * )
      * Remove article
      *

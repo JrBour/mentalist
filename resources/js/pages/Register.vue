@@ -4,16 +4,19 @@
                     <v-text-field
                         v-model="firstname"
                         label="Firstname"
+                        :rules="fieldRules"
                         required
                     ></v-text-field>
                     <v-text-field
                         v-model="name"
                         label="Lastname"
+                        :rules="fieldRules"
                         required
                     ></v-text-field>
                     <v-text-field
                         v-model="username"
                         label="Username"
+                        :rules="fieldRules"
                         required
                     ></v-text-field>
                     <v-text-field
@@ -25,6 +28,7 @@
                     <v-text-field
                         v-model="password"
                         label="Password"
+                        :rules="fieldRules"
                         type="password"
                         required
                     ></v-text-field>
@@ -51,6 +55,9 @@
             name: '',
             email: '',
             password: '',
+            fieldRules: [
+                v => !!v || 'This field is required',
+            ],
             emailRules: [
                 v => !!v || 'E-mail is required',
                 v => /.+@.+/.test(v) || 'E-mail must be valid'

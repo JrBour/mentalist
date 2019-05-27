@@ -12,6 +12,7 @@
                         v-model="password"
                         label="Password"
                         type="password"
+                        :rules="passwordRules"
                         required
                     ></v-text-field>
                 <v-btn
@@ -35,6 +36,9 @@
             emailRules: [
                 v => !!v || 'E-mail is required',
                 v => /.+@.+/.test(v) || 'E-mail must be valid'
+            ],
+            passwordRules: [
+                v => !!v || 'Password is required',
             ]
         }),
         methods :{

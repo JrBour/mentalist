@@ -2660,6 +2660,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2671,6 +2672,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return !!v || 'E-mail is required';
       }, function (v) {
         return /.+@.+/.test(v) || 'E-mail must be valid';
+      }],
+      passwordRules: [function (v) {
+        return !!v || 'Password is required';
       }]
     };
   },
@@ -2782,6 +2786,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2793,6 +2801,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       name: '',
       email: '',
       password: '',
+      fieldRules: [function (v) {
+        return !!v || 'This field is required';
+      }],
       emailRules: [function (v) {
         return !!v || 'E-mail is required';
       }, function (v) {
@@ -4106,7 +4117,12 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("v-text-field", {
-            attrs: { label: "Password", type: "password", required: "" },
+            attrs: {
+              label: "Password",
+              type: "password",
+              rules: _vm.passwordRules,
+              required: ""
+            },
             model: {
               value: _vm.password,
               callback: function($$v) {
@@ -4169,7 +4185,7 @@ var render = function() {
         "v-container",
         [
           _c("v-text-field", {
-            attrs: { label: "Firstname", required: "" },
+            attrs: { label: "Firstname", rules: _vm.fieldRules, required: "" },
             model: {
               value: _vm.firstname,
               callback: function($$v) {
@@ -4180,7 +4196,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("v-text-field", {
-            attrs: { label: "Lastname", required: "" },
+            attrs: { label: "Lastname", rules: _vm.fieldRules, required: "" },
             model: {
               value: _vm.name,
               callback: function($$v) {
@@ -4191,7 +4207,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("v-text-field", {
-            attrs: { label: "Username", required: "" },
+            attrs: { label: "Username", rules: _vm.fieldRules, required: "" },
             model: {
               value: _vm.username,
               callback: function($$v) {
@@ -4213,7 +4229,12 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("v-text-field", {
-            attrs: { label: "Password", type: "password", required: "" },
+            attrs: {
+              label: "Password",
+              rules: _vm.fieldRules,
+              type: "password",
+              required: ""
+            },
             model: {
               value: _vm.password,
               callback: function($$v) {

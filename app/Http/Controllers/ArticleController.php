@@ -7,6 +7,7 @@ use App\Article;
 use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -44,7 +45,6 @@ class ArticleController extends Controller
      *              items={@OA\Schema(ref="#/components/schemas/Article")}
      *          )
      *       ),
-     *       @OA\Response(response=400, description="Bad request"),
      * )
      * Retrieve all articles
      *
@@ -52,11 +52,11 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        return DB::table('articles')->paginate(15);;
+        return DB::table('articles')->paginate(15);
     }
 
     /**
-     *  @OA\Post(
+     * @OA\Post(
      *     path="/articles",
      *     tags={"article"},
      *     description="Create an article",
@@ -74,29 +74,23 @@ class ArticleController extends Controller
      * Create article
      *
      * @param Request $request
-     * @return Article|\Illuminate\Support\MessageBag
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Support\MessageBag
      */
     public function store(Request $request)
     {
         $validation = Validator::make($request->all(), [
             'title' => 'required|string|min:2|max:255',
             'content' => 'required|string|min:2',
-            'author' => 'required|integer',
-            'category' => 'required|integer'
+            'author_id' => 'required|integer',
+            'category_id' => 'required|integer'
         ]);
 
         if ($validation->fails())
             return $validation->errors();
 
-        $article = new Article();
-        $article->title = $request->title;
-        $article->content = $request->content;
-        $article->author()->associate(User::find($request->author));
-        $article->category()->associate(Category::find($request->category));
+        $article = Article::create($request->only(['title', 'content', 'author_id', 'category_id']));
 
-        $article->save();
-
-        return $article;
+        return Response::json($article,201);
     }
 
     /**
@@ -118,23 +112,22 @@ class ArticleController extends Controller
      *          description="successful operation",
      *          @OA\JsonContent(ref="#/components/schemas/Article"),
      *       ),
-     *       @OA\Response(response=400, description="Bad request"),
+     *       @OA\Response(response=404, description="Resource not found"),
      * )
      * Get article by id
      *
-     * @param int $id
-     * @return mixed
+     * @param Article $article
+     * @return Article
      */
-    public function show(int $id)
+    public function show(Article $article)
     {
-        return Article::find($id);
+        return $article;
     }
 
     /**
-     * @OA\Put(
+     *  @OA\Put(
      *     path="/articles/{id}",
      *     tags={"article"},
-     *     summary="Update article",
      *     operationId="updateArticle",
      *     @OA\Parameter(
      *          in="path",
@@ -153,33 +146,28 @@ class ArticleController extends Controller
      *          @OA\JsonContent(ref="#/components/schemas/Article")
      *     ),
      *     @OA\Response(response=400, description="Bad request"),
+     *     @OA\Response(response=404, description="Resource not found")
      * )
      *
      * Update article
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Article $article
+     * @return Article|\Illuminate\Support\MessageBag
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, Article $article)
     {
         $validation = Validator::make($request->all(), [
             'title' => 'required|string|min:2|max:255',
             'content' => 'required|string|min:2',
-            'author' => 'required|integer',
-            'category' => 'required|integer'
+            'author_id' => 'required|integer',
+            'category_id' => 'required|integer'
         ]);
 
         if ($validation->fails())
             return $validation->errors();
 
-        $article = Article::find($id);
-        $article->title = $request->title;
-        $article->content = $request->content;
-        $article->author()->associate(User::find($request->author));
-        $article->category()->associate(Category::find($request->category));
-
-        $article->save();
+        $article->update($request->only(['title', 'content', 'author_id', 'category_id']));
 
         return $article;
     }
@@ -203,14 +191,18 @@ class ArticleController extends Controller
      *          description="successful operation"
      *       ),
      *       @OA\Response(response=400, description="Bad request"),
+     *       @OA\Response(response=404, description="Resource not found"),
      * )
      * Remove article
      *
-     * @param int $id
-     * @return int
+     * @param Article $article
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
-    public function destroy(int $id)
+    public function destroy(Article $article)
     {
-        return Article::destroy($id);
+        $article->delete();
+
+        return Response::json([],204);
     }
 }

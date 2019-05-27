@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
 /**
@@ -72,7 +73,7 @@ class UserController extends Controller
      * Create User
      *
      * @param Request $request
-     * @return User|\Illuminate\Support\MessageBag
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Support\MessageBag
      */
     public function store(Request $request)
     {
@@ -98,7 +99,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return $user;
+        return Response::json($user,201);
     }
 
     /**
@@ -123,14 +124,14 @@ class UserController extends Controller
      *       @OA\Response(response=400, description="Bad request"),
      * )
      *
-     * Retrieve single User
+     * Get user by id
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return User
      */
-    public function show(int $id)
+    public function show(User $user)
     {
-        return User::find($id);
+        return $user;
     }
 
     /**
@@ -154,15 +155,17 @@ class UserController extends Controller
      *     ),
      *     @OA\RequestBody(
      *          @OA\JsonContent(ref="#/components/schemas/User")
-     *     )
+     *     ),
+     *     @OA\Response(response=400, description="Bad request"),
+     *     @OA\Response(response=404, description="Resource not found"),
      * )
      * Update User
      *
      * @param Request $request
-     * @param int $id
+     * @param User $user
      * @return User|\Illuminate\Support\MessageBag
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, User $user)
     {
         $validation = Validator::make($request->all(), [
             'firstname' => 'required|string|min:2|max:255',
@@ -172,11 +175,9 @@ class UserController extends Controller
             'password' => 'required|string|min:6|max:255'
         ]);
 
-        if ($validation->fails()) {
+        if ($validation->fails())
             return $validation->errors();
-        }
 
-        $user = User::find($id);
         $user->firstname = $request->firstname;
         $user->username= $request->username;
         $user->name = $request->name;
@@ -190,9 +191,8 @@ class UserController extends Controller
         return $user;
     }
 
-
     /**
-     *  @OA\Delete(
+     * @OA\Delete(
      *      path="/users/{id}",
      *      operationId="deleteUser",
      *      tags={"user"},
@@ -209,14 +209,18 @@ class UserController extends Controller
      *          response=204,
      *          description="successful operation"
      *       ),
-     *       @OA\Response(response=400, description="Bad request"),
+     *       @OA\Response(response=404, description="Resource not found"),
      * )
      * Destroy User
      *
-     * @param int $id
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
-    public function destroy(int $id)
+    public function destroy(User $user)
     {
-        User::destroy($id);
+        $user->delete();
+
+        return Response::json([],204);
     }
 }

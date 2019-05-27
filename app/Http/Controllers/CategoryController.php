@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-
 
 /**
  * @OA\Tag(
@@ -41,10 +41,10 @@ class CategoryController extends Controller
      *              type="array",
      *              items={@OA\Schema(ref="#/components/schemas/Category")}
      *          )
-     *       ),
-     *       @OA\Response(response=400, description="Bad request"),
+     *       )
      * )
      * Retrieve all categories
+     *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function index()
@@ -70,7 +70,7 @@ class CategoryController extends Controller
      * Create category
      *
      * @param Request $request
-     * @return Category|\Illuminate\Support\MessageBag
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Support\MessageBag
      */
     public function store(Request $request)
     {
@@ -80,13 +80,9 @@ class CategoryController extends Controller
 
         if ($validation->fails())
             return $validation->errors();
+        $category = Category::create($request->only(['name']));
 
-        $category = new Category();
-        $category->name = $request->name;
-
-        $category->save();
-
-        return $category;
+        return Response::json($category, 201);
     }
 
     /**
@@ -108,16 +104,16 @@ class CategoryController extends Controller
      *          description="successful operation",
      *          @OA\JsonContent(ref="#/components/schemas/Category"),
      *       ),
-     *       @OA\Response(response=400, description="Bad request"),
+     *      @OA\Response(response=404, description="Resource not found")
      * )
      * Get category by id
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Category $category
+     * @return Category
      */
-    public function show(int $id)
+    public function show(Category $category)
     {
-        return Category::find($id);
+        return $category;
     }
 
     /**
@@ -143,14 +139,15 @@ class CategoryController extends Controller
      *          @OA\JsonContent(ref="#/components/schemas/Category")
      *     ),
      *     @OA\Response(response=400, description="Bad request"),
+     *     @OA\Response(response=404, description="Resource not found"),
      * )
-     * Update category.
+     * Update category
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Category $category
+     * @return Category|\Illuminate\Support\MessageBag
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, Category $category)
     {
         $validation = Validator::make($request->all(), [
             'name' => 'required|string|min:2|max:255',
@@ -159,13 +156,11 @@ class CategoryController extends Controller
         if ($validation->fails())
             return $validation->errors();
 
-        $category = Category::find($id);
-        $category->name = $request->name;
-
-        $category->save();
+        $category->update($request->only(['name']));
 
         return $category;
     }
+
 
     /**
      *  @OA\Delete(
@@ -185,14 +180,18 @@ class CategoryController extends Controller
      *          response=204,
      *          description="successful operation"
      *       ),
-     *       @OA\Response(response=400, description="Bad request"),
+     *       @OA\Response(response=404, description="Resource not found"),
      * )
      * Remove category
      *
-     * @param int $id
+     * @param Category $category
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
-    public function destroy(int $id)
+    public function destroy(Category $category)
     {
-        Category::destroy($id);
+        $category->delete();
+
+        return Response::json([],204);
     }
 }

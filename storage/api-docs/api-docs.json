@@ -32,17 +32,13 @@
                         "in": "query",
                         "required": false,
                         "schema": {
-                            "type": "integer",
-                            "minimum": 1
+                            "type": "integer"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "successful operation"
-                    },
-                    "400": {
-                        "description": "Bad request"
                     }
                 }
             },
@@ -99,8 +95,8 @@
                             }
                         }
                     },
-                    "400": {
-                        "description": "Bad request"
+                    "404": {
+                        "description": "Resource not found"
                     }
                 }
             },
@@ -108,7 +104,6 @@
                 "tags": [
                     "article"
                 ],
-                "summary": "Update article",
                 "operationId": "updateArticle",
                 "parameters": [
                     {
@@ -142,6 +137,9 @@
                     },
                     "400": {
                         "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource not found"
                     }
                 }
             },
@@ -167,6 +165,9 @@
                     },
                     "400": {
                         "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource not found"
                     }
                 }
             }
@@ -178,12 +179,19 @@
                 ],
                 "summary": "Get list of all categories",
                 "operationId": "getCategories",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation"
-                    },
-                    "400": {
-                        "description": "Bad request"
                     }
                 }
             },
@@ -240,8 +248,8 @@
                             }
                         }
                     },
-                    "400": {
-                        "description": "Bad request"
+                    "404": {
+                        "description": "Resource not found"
                     }
                 }
             },
@@ -283,6 +291,9 @@
                     },
                     "400": {
                         "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource not found"
                     }
                 }
             },
@@ -306,8 +317,8 @@
                     "204": {
                         "description": "successful operation"
                     },
-                    "400": {
-                        "description": "Bad request"
+                    "404": {
+                        "description": "Resource not found"
                     }
                 }
             }
@@ -319,12 +330,19 @@
                 ],
                 "summary": "Get list of all comments",
                 "operationId": "getComments",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation"
-                    },
-                    "400": {
-                        "description": "Bad request"
                     }
                 }
             },
@@ -460,6 +478,16 @@
                 ],
                 "summary": "Get list of all likes",
                 "operationId": "getLikes",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation"
@@ -588,8 +616,8 @@
                     "204": {
                         "description": "successful operation"
                     },
-                    "400": {
-                        "description": "Bad request"
+                    "404": {
+                        "description": "Resource not found"
                     }
                 }
             }
@@ -601,6 +629,16 @@
                 ],
                 "summary": "Get list of all users",
                 "operationId": "getUsersList",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "successful operation"

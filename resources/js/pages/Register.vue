@@ -58,7 +58,6 @@
         }),
         methods :{
             submit: async function (){
-                console.log(this);
                 const data = {
                     firstname: this.firstname,
                     username: this.username,
@@ -68,9 +67,8 @@
                 }
                 const response = await axios.post('/api/users', data);
                 if (response.status === 201){
-                    this.success = true;
+                    this.$router.push('/login');
                 }
-                console.log(response);
             }
         }
     }

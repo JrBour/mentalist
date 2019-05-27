@@ -7,6 +7,7 @@ Vue.use(VueRouter)
 Vue.use(Vuetify)
 
 import App from './App'
+import { store } from './store/store'
 import ExampleComponent from './pages/ExampleComponent'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -40,6 +41,7 @@ const router = new VueRouter({
 
 const app = new Vue({
     el: '#app',
+    store,
     components: { App },
     router,
 });

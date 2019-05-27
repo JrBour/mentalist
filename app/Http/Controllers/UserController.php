@@ -140,10 +140,19 @@ class UserController extends Controller
             return $validation->errors();
 
         if (auth()->attempt(['email' => $request->input('email'), 'password' => $request->input('password')])) {
-
-            return auth()->user();
+            $user = auth()->user();
+            $username = $user->email;
+            $password = $request->input('password');
+            $basicAuth = base64_encode("{$username}:{$password}");
+            $user->token = $basicAuth;
+            return $user;
         }
         return response()->json(['error' => 'Unauthenticated user'], 401);
+    }
+
+    public function test()
+    {
+        return 'bien joue fdp';
     }
 
     /**

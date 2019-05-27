@@ -38,14 +38,19 @@
             ]
         }),
         methods :{
-            submit: function (){
+            submit: async function (){
                 const data = {
                     email: this.email,
                     password: this.password,
                 }
-                const response = axios.post('/api/login', data);
-
-                console.log(response);
+                const response = await axios.post('/api/login', data);
+                if (response.status === 200){
+                    localStorage.setItem('token', response.data.token);
+                    localStorage.setItem('userId', response.data.id);
+                    delete response.data.token;
+                    this.$store.commit('setUser', response.data);
+                    this.$router.push('/');
+                }
             }
         }
     }

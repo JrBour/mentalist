@@ -103,6 +103,50 @@ class UserController extends Controller
     }
 
     /**
+     * @OA\Post(
+     *     path="/login",
+     *     tags={"login"},
+     *     summary="Logged an user",
+     *     operationId="loginUser",
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation"
+     *     ),
+     *     @OA\RequestBody(
+     *          required=true,
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  @OA\Property(property="email", type="string"),
+     *                  @OA\Property(property="password", type="string"),
+     *              )
+     *          )
+     *      )
+     * )
+     *
+     * Sign in an user
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Support\MessageBag
+     */
+    public function login(Request $request)
+    {
+        $validation = Validator::make($request->all(), [
+            'email' => 'required|string|email|min:2|max:255',
+            'password' => 'required|string|min:6|max:255'
+        ]);
+
+        if ($validation->fails())
+            return $validation->errors();
+
+        if (auth()->attempt(['email' => $request->input('email'), 'password' => $request->input('password')])) {
+
+            return auth()->user();
+        }
+        return response()->json(['error' => 'Unauthenticated user'], 401);
+    }
+
+    /**
      * @OA\Get(
      *      path="/users/{id}",
      *      operationId="getUser",

@@ -9,6 +9,8 @@ Vue.use(Vuetify)
 import App from './App'
 import ExampleComponent from './pages/ExampleComponent'
 import Home from './pages/Home'
+import Login from './pages/Login'
+import Register from './pages/Register'
 
 const router = new VueRouter({
     mode: 'history',
@@ -17,6 +19,16 @@ const router = new VueRouter({
             path: '/',
             name: 'home',
             component: Home
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component: Login
+        },
+        {
+            path: '/register',
+            name: 'register',
+            component: Register
         },
         {
             path: '/hello',

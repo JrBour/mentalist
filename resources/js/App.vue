@@ -5,8 +5,11 @@
                 <v-btn flat :to="{ name: 'home' }">
                     Home
                 </v-btn>
-                <v-btn flat :to="{ name: 'hello' }">
-                    Hello World
+                <v-btn flat :to="{ name: 'login' }">
+                    Login
+                </v-btn>
+                <v-btn flat :to="{ name: 'register' }">
+                    Register
                 </v-btn>
             </v-toolbar-items>
         </v-toolbar>

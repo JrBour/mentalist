@@ -322,8 +322,6 @@ paths:
       responses:
         200:
           description: 'successful operation'
-        400:
-          description: 'Bad request'
     post:
       tags:
         - like
@@ -359,8 +357,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Like'
-        400:
-          description: 'Bad request'
+        404:
+          description: 'Resource not found'
     put:
       tags:
         - like
@@ -387,6 +385,8 @@ paths:
                 $ref: '#/components/schemas/Like'
         400:
           description: 'Bad request'
+        404:
+          description: 'Resource not found'
     delete:
       tags:
         - like
@@ -435,6 +435,26 @@ paths:
       responses:
         201:
           description: 'successful operation'
+  /login:
+    post:
+      tags:
+        - login
+      summary: 'Logged an user'
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              type: object
+      responses:
+        200:
+          description: 'successful operation'
   '/users/{id}':
     get:
       tags:
@@ -481,6 +501,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+        400:
+          description: 'Bad request'
+        404:
+          description: 'Resource not found'
     delete:
       tags:
         - user
@@ -496,8 +520,8 @@ paths:
       responses:
         204:
           description: 'successful operation'
-        400:
-          description: 'Bad request'
+        404:
+          description: 'Resource not found'
 components:
   schemas:
     Article:

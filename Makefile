@@ -21,6 +21,9 @@ artisan:
 	docker exec $(workspace_container) php artisan $(exec)
 
 test: build
-	docker exec $(workspace_container) yarn test --coverage
+	docker exec $(workspace_container) rm database/database_testing.sqlite ;
+	docker exec $(workspace_container) touch database/database_testing.sqlite ;
+	docker exec $(workspace_container) php artisan migrate --env=testing ;
+	docker exec $(workspace_container) ./vendor/bin/phpunit --debug --colors=always
 
 .PHONY: install build dev start stop artisan test

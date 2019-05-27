@@ -150,11 +150,6 @@ class UserController extends Controller
         return response()->json(['error' => 'Unauthenticated user'], 401);
     }
 
-    public function test()
-    {
-        return 'bien joue fdp';
-    }
-
     /**
      * @OA\Get(
      *      path="/users/{id}",

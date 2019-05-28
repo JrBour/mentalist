@@ -11,7 +11,7 @@
                 <v-btn flat v-if="$store.getters.user === null" :to="{ name: 'register' }">
                     Register
                 </v-btn>
-                <v-btn v-if="$store.getters.user !== null" flat :to="{ name: 'login' }">
+                <v-btn v-if="$store.getters.user !== null" flat :to="{ name: 'profile' }">
                     {{ $store.getters.user.username }}
                 </v-btn>
                 <v-btn v-if="$store.getters.user !== null" flat @click="logout">
@@ -30,7 +30,7 @@
         mounted : async function (){
             const userId = localStorage.getItem('userId');
             if (userId !== null) {
-                const user = await axios.get(`/api/users/${userId}`);
+                const user = await axios.get(`users/${userId}`);
                 this.$store.commit('setUser', user.data);
             }
         },

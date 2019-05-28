@@ -2,31 +2,31 @@
     <v-form v-model="valid">
         <v-container>
                     <v-text-field
-                        v-model="firstname"
+                        v-model="user.firstname"
                         label="Firstname"
                         :rules="fieldRules"
                         required
                     ></v-text-field>
                     <v-text-field
-                        v-model="name"
+                        v-model="user.name"
                         label="Lastname"
                         :rules="fieldRules"
                         required
                     ></v-text-field>
                     <v-text-field
-                        v-model="username"
+                        v-model="user.username"
                         label="Username"
                         :rules="fieldRules"
                         required
                     ></v-text-field>
                     <v-text-field
-                        v-model="email"
+                        v-model="user.email"
                         :rules="emailRules"
                         label="E-mail"
                         required
                     ></v-text-field>
                     <v-text-field
-                        v-model="password"
+                        v-model="user.password"
                         label="Password"
                         :rules="fieldRules"
                         type="password"
@@ -37,7 +37,7 @@
                     color="success"
                     @click="submit"
                 >
-                    Sign up
+                    Edit
                 </v-btn>
             <p v-show="success">Register successful !</p>
         </v-container>
@@ -50,11 +50,7 @@
         data: () => ({
             valid: false,
             success:false,
-            firstname: '',
-            username: '',
-            name: '',
-            email: '',
-            password: '',
+            user : null,
             fieldRules: [
                 v => !!v || 'This field is required',
             ],
@@ -63,6 +59,9 @@
                 v => /.+@.+/.test(v) || 'E-mail must be valid'
             ]
         }),
+        mounted(){
+            this.user = this.$store.getters.user;
+        },
         methods :{
             submit: async function (){
                 const data = {
@@ -72,9 +71,9 @@
                     email: this.email,
                     password: this.password
                 }
-                const response = await axios.post('users', data);
-                if (response.status === 201){
-                    this.$router.push('/login');
+                const response = await axios.put(`users/${this.user.id}`, data);
+                if (response.status === 200){
+                    this.$router.push('/profile');
                 }
             }
         }

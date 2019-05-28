@@ -47,7 +47,7 @@
                     email: this.email,
                     password: this.password,
                 }
-                const response = await axios.post('/api/login', data);
+                const response = await axios.post('login', data);
                 if (response.status === 200){
                     localStorage.setItem('token', response.data.token);
                     localStorage.setItem('userId', response.data.id);
@@ -59,7 +59,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>

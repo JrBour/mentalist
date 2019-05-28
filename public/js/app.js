@@ -2591,6 +2591,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     logout: function logout() {
       this.$store.commit('setUser', null);
       localStorage.clear();
+      this.$router.push('/');
     }
   }
 });
@@ -2755,6 +2756,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2854,36 +2857,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   mounted: function mounted() {
-    this.user = this.$store.getters.user;
+    this.user = this.$store.getters.user ? this.$store.getters.user : {};
   },
   methods: {
     submit: function () {
       var _submit = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var data, response;
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                data = {
-                  firstname: this.firstname,
-                  username: this.username,
-                  name: this.name,
-                  email: this.email,
-                  password: this.password
-                };
-                _context.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.put("users/".concat(this.user.id), data);
+                _context.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.put("users/".concat(this.user.id), this.user);
 
-              case 3:
+              case 2:
                 response = _context.sent;
 
                 if (response.status === 200) {
+                  delete this.user.password;
+                  this.$store.commit('setUser', this.user);
                   this.$router.push('/profile');
                 }
 
-              case 5:
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -4356,6 +4354,13 @@ var render = function() {
           ? _c(
               "div",
               [
+                _c("img", {
+                  attrs: {
+                    src: "https://www.gravatar.com/avatar/" + _vm.user.image,
+                    alt: ""
+                  }
+                }),
+                _vm._v(" "),
                 _c("h1", [
                   _vm._v(_vm._s(_vm.user.firstname + " " + _vm.user.name))
                 ]),
@@ -4432,95 +4437,109 @@ var render = function() {
       }
     },
     [
-      _c(
-        "v-container",
-        [
-          _c("v-text-field", {
-            attrs: { label: "Firstname", rules: _vm.fieldRules, required: "" },
-            model: {
-              value: _vm.user.firstname,
-              callback: function($$v) {
-                _vm.$set(_vm.user, "firstname", $$v)
-              },
-              expression: "user.firstname"
-            }
-          }),
-          _vm._v(" "),
-          _c("v-text-field", {
-            attrs: { label: "Lastname", rules: _vm.fieldRules, required: "" },
-            model: {
-              value: _vm.user.name,
-              callback: function($$v) {
-                _vm.$set(_vm.user, "name", $$v)
-              },
-              expression: "user.name"
-            }
-          }),
-          _vm._v(" "),
-          _c("v-text-field", {
-            attrs: { label: "Username", rules: _vm.fieldRules, required: "" },
-            model: {
-              value: _vm.user.username,
-              callback: function($$v) {
-                _vm.$set(_vm.user, "username", $$v)
-              },
-              expression: "user.username"
-            }
-          }),
-          _vm._v(" "),
-          _c("v-text-field", {
-            attrs: { rules: _vm.emailRules, label: "E-mail", required: "" },
-            model: {
-              value: _vm.user.email,
-              callback: function($$v) {
-                _vm.$set(_vm.user, "email", $$v)
-              },
-              expression: "user.email"
-            }
-          }),
-          _vm._v(" "),
-          _c("v-text-field", {
-            attrs: {
-              label: "Password",
-              rules: _vm.fieldRules,
-              type: "password",
-              required: ""
-            },
-            model: {
-              value: _vm.user.password,
-              callback: function($$v) {
-                _vm.$set(_vm.user, "password", $$v)
-              },
-              expression: "user.password"
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "v-btn",
-            {
-              attrs: { disabled: !_vm.valid, color: "success" },
-              on: { click: _vm.submit }
-            },
-            [_vm._v("\n                Edit\n            ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "p",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.success,
-                  expression: "success"
+      _vm.user !== null
+        ? _c(
+            "v-container",
+            [
+              _c("v-text-field", {
+                attrs: {
+                  label: "Firstname",
+                  rules: _vm.fieldRules,
+                  required: ""
+                },
+                model: {
+                  value: _vm.user.firstname,
+                  callback: function($$v) {
+                    _vm.$set(_vm.user, "firstname", $$v)
+                  },
+                  expression: "user.firstname"
                 }
-              ]
-            },
-            [_vm._v("Register successful !")]
+              }),
+              _vm._v(" "),
+              _c("v-text-field", {
+                attrs: {
+                  label: "Lastname",
+                  rules: _vm.fieldRules,
+                  required: ""
+                },
+                model: {
+                  value: _vm.user.name,
+                  callback: function($$v) {
+                    _vm.$set(_vm.user, "name", $$v)
+                  },
+                  expression: "user.name"
+                }
+              }),
+              _vm._v(" "),
+              _c("v-text-field", {
+                attrs: {
+                  label: "Username",
+                  rules: _vm.fieldRules,
+                  required: ""
+                },
+                model: {
+                  value: _vm.user.username,
+                  callback: function($$v) {
+                    _vm.$set(_vm.user, "username", $$v)
+                  },
+                  expression: "user.username"
+                }
+              }),
+              _vm._v(" "),
+              _c("v-text-field", {
+                attrs: { rules: _vm.emailRules, label: "E-mail", required: "" },
+                model: {
+                  value: _vm.user.email,
+                  callback: function($$v) {
+                    _vm.$set(_vm.user, "email", $$v)
+                  },
+                  expression: "user.email"
+                }
+              }),
+              _vm._v(" "),
+              _c("v-text-field", {
+                attrs: {
+                  label: "Password",
+                  rules: _vm.fieldRules,
+                  type: "password",
+                  required: ""
+                },
+                model: {
+                  value: _vm.user.password,
+                  callback: function($$v) {
+                    _vm.$set(_vm.user, "password", $$v)
+                  },
+                  expression: "user.password"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                {
+                  attrs: { disabled: !_vm.valid, color: "success" },
+                  on: { click: _vm.submit }
+                },
+                [_vm._v("\n                Edit\n            ")]
+              ),
+              _vm._v(" "),
+              _c(
+                "p",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.success,
+                      expression: "success"
+                    }
+                  ]
+                },
+                [_vm._v("Register successful !")]
+              )
+            ],
+            1
           )
-        ],
-        1
-      )
+        : _vm._e()
     ],
     1
   )

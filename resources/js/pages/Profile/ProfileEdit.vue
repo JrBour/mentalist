@@ -1,6 +1,6 @@
 <template>
     <v-form v-model="valid">
-        <v-container>
+        <v-container v-if="user !== null">
                     <v-text-field
                         v-model="user.firstname"
                         label="Firstname"
@@ -60,19 +60,14 @@
             ]
         }),
         mounted(){
-            this.user = this.$store.getters.user;
+            this.user = this.$store.getters.user ? this.$store.getters.user : {};
         },
         methods :{
             submit: async function (){
-                const data = {
-                    firstname: this.firstname,
-                    username: this.username,
-                    name: this.name,
-                    email: this.email,
-                    password: this.password
-                }
-                const response = await axios.put(`users/${this.user.id}`, data);
+                const response = await axios.put(`users/${this.user.id}`, this.user);
                 if (response.status === 200){
+                    delete this.user.password;
+                    this.$store.commit('setUser', this.user)
                     this.$router.push('/profile');
                 }
             }

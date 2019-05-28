@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
@@ -21,7 +22,6 @@ use Illuminate\Support\Facades\Validator;
  */
 class UserController extends Controller
 {
-
     /**
      * * @OA\Get(
      *      path="/users",
@@ -144,7 +144,11 @@ class UserController extends Controller
             $username = $user->email;
             $password = $request->input('password');
             $basicAuth = base64_encode("{$username}:{$password}");
+            $client = new Client(['base_uri' => 'https://www.gravatar.com/avatar/']);
+            $response = $client->request('GET', $user->email_hashed);
+            $user->picture = explode('"', $response->getHeader('Content-Disposition')[0])[1];
             $user->token = $basicAuth;
+
             return $user;
         }
         return response()->json(['error' => 'Unauthenticated user'], 401);

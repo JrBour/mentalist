@@ -1,6 +1,8 @@
 <template>
     <v-container v-if="user !== null">
         <div v-if="user">
+            <img :src="'https://www.gravatar.com/avatar/' + user.image" alt="">
+
             <h1>{{user.firstname + ' ' + user.name}}</h1>
             <ul>
                 <li>Username : <b>{{ user.username }}</b></li>

@@ -12,6 +12,7 @@ import { store } from './store/store';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Categories from './pages/Categories/Index';
 import Profile from './pages/Profile/Profile';
 import ProfileEdit from './pages/Profile/ProfileEdit';
 
@@ -29,6 +30,11 @@ const router = new VueRouter({
             path: '/login',
             name: 'login',
             component: Login
+        },
+        {
+            path: '/categories',
+            name: 'categories',
+            component: Categories
         },
         {
             path: '/register',

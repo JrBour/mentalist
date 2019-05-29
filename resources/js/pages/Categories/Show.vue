@@ -8,7 +8,9 @@
         <v-layout v-else>
             <p>No article</p>
         </v-layout>
-        <v-btn></v-btn>
+        <v-btn color="success" @click="$router.push(`/categories/${category.id}/edit`)">
+            Edit
+        </v-btn>
 
     </div>
 </template>

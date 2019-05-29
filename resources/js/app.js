@@ -14,6 +14,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Categories from './pages/Categories/Index';
 import ShowCategory from './pages/Categories/Show';
+import CategoryForm from './pages/Categories/CategoryForm';
 import Profile from './pages/Profile/Profile';
 import ProfileEdit from './pages/Profile/ProfileEdit';
 
@@ -41,6 +42,16 @@ const router = new VueRouter({
             path: '/categories/:id',
             name: 'showCategory',
             component: ShowCategory
+        },
+        {
+            path: '/categories/:id/edit',
+            name: 'editCategory',
+            component: CategoryForm
+        },
+        {
+            path: '/categories/create',
+            name: 'createCategory',
+            component: CategoryForm
         },
         {
             path: '/register',

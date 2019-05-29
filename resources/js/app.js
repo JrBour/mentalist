@@ -14,8 +14,10 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile/Profile';
 import ProfileEdit from './pages/Profile/ProfileEdit';
+import Articles from './pages/Articles'
 
 axios.defaults.baseURL = 'http://localhost:80/api/';
+
 
 const router = new VueRouter({
     mode: 'history',
@@ -44,6 +46,11 @@ const router = new VueRouter({
             path: '/profile/edit',
             name: 'profileEdit',
             component: ProfileEdit
+        },
+        {
+            path: '/articles/:page?',
+            name: 'articles',
+            component: Articles
         }
     ],
 });

@@ -64,7 +64,7 @@
             ]
         }),
         methods :{
-            submit: async function (){
+            submit: async function () {
                 const data = {
                     firstname: this.firstname,
                     username: this.username,

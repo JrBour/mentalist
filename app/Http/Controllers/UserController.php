@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
@@ -21,7 +22,6 @@ use Illuminate\Support\Facades\Validator;
  */
 class UserController extends Controller
 {
-
     /**
      * * @OA\Get(
      *      path="/users",
@@ -127,7 +127,8 @@ class UserController extends Controller
      * Sign in an user
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Support\MessageBag
+     * @return \Illuminate\Contracts\Auth\Authenticatable|\Illuminate\Http\JsonResponse|\Illuminate\Support\MessageBag|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function login(Request $request)
     {
@@ -144,7 +145,11 @@ class UserController extends Controller
             $username = $user->email;
             $password = $request->input('password');
             $basicAuth = base64_encode("{$username}:{$password}");
+            $client = new Client(['base_uri' => 'https://www.gravatar.com/avatar/']);
+            $response = $client->request('GET', $user->email_hashed);
+            $user->picture = explode('"', $response->getHeader('Content-Disposition')[0])[1];
             $user->token = $basicAuth;
+
             return $user;
         }
         return response()->json(['error' => 'Unauthenticated user'], 401);
@@ -167,7 +172,10 @@ class UserController extends Controller
      *      @OA\Response(
      *          response=200,
      *          description="successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/User"),
+     *          @OA\Schema(
+     *              type="array",
+     *              items={@OA\Schema(ref="#/components/schemas/Article")}
+     *          )
      *       ),
      *       @OA\Response(response=400, description="Bad request"),
      * )
@@ -180,6 +188,39 @@ class UserController extends Controller
     public function show(User $user)
     {
         return $user;
+    }
+
+    /**
+     *  @OA\Get(
+     *      path="/users/{id}/articles",
+     *      operationId="getArticlesByUser",
+     *      tags={"userArticles"},
+     *      summary="Get articles by user",
+     *      @OA\Parameter(
+     *          in="path",
+     *          name="id",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/User"),
+     *       ),
+     *       @OA\Response(response=400, description="Bad request"),
+     * )
+     *
+     * Get articles by user
+     *
+     * @param int $id
+     * @return \Illuminate\Support\Collection
+     */
+    public function getArticlesByUser(int $id)
+    {
+        return DB::table('articles')->where('author_id', $id)->get();
+
     }
 
     /**

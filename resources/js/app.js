@@ -39,6 +39,11 @@ const router = new VueRouter({
             component: Categories
         },
         {
+            path: '/categories/create',
+            name: 'createCategory',
+            component: CategoryForm
+        },
+        {
             path: '/categories/:id',
             name: 'showCategory',
             component: ShowCategory
@@ -46,11 +51,6 @@ const router = new VueRouter({
         {
             path: '/categories/:id/edit',
             name: 'editCategory',
-            component: CategoryForm
-        },
-        {
-            path: '/categories/create',
-            name: 'createCategory',
             component: CategoryForm
         },
         {

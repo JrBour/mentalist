@@ -2718,7 +2718,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 0:
               this.id = this.$route.params.id;
 
-              if (!(this.id !== null)) {
+              if (!this.id) {
                 _context.next = 6;
                 break;
               }
@@ -2758,7 +2758,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                if (!(this.id !== null)) {
+                if (!this.id) {
                   _context2.next = 7;
                   break;
                 }
@@ -2788,7 +2788,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 9:
                 _response = _context2.sent;
 
-                if (_response.status === 200) {
+                if (_response.status === 201) {
                   this.name = _response.data.name;
                   this.$router.push('/categories');
                 }
@@ -2832,6 +2832,9 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
 //
 //
 //
@@ -2968,6 +2971,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3023,7 +3029,42 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
 
     return mounted;
-  }()
+  }(),
+  methods: {
+    remove: function () {
+      var _remove = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_2___default.a["delete"]("categories/".concat(id));
+
+              case 2:
+                response = _context2.sent;
+
+                if (response.status === 204) {
+                  this.$router.push('/categories');
+                }
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function remove(_x) {
+        return _remove.apply(this, arguments);
+      }
+
+      return remove;
+    }()
+  }
 });
 
 /***/ }),
@@ -4869,7 +4910,7 @@ var render = function() {
             [
               _vm._v(
                 "\n            " +
-                  _vm._s(_vm.id !== null ? "Edit" : "Create") +
+                  _vm._s(_vm.id ? "Edit" : "Create") +
                   "\n        "
               )
             ]
@@ -4920,8 +4961,23 @@ var render = function() {
         1
       ),
       _vm._v(" "),
+      _c(
+        "v-btn",
+        {
+          attrs: { color: "success" },
+          on: {
+            click: function($event) {
+              return _vm.$router.push("/categories/create")
+            }
+          }
+        },
+        [_vm._v("\n    Create new category\n    ")]
+      ),
+      _vm._v(" "),
       _c("v-pagination", {
-        attrs: { length: _vm.total / 10 },
+        attrs: {
+          length: _vm.total % 10 === 0 ? _vm.total / 10 : _vm.total / 10 + 1
+        },
         on: { input: _vm.next },
         model: {
           value: _vm.page,
@@ -4995,6 +5051,19 @@ var render = function() {
           }
         },
         [_vm._v("\n        Edit\n    ")]
+      ),
+      _vm._v(" "),
+      _c(
+        "v-btn",
+        {
+          attrs: { color: "error" },
+          on: {
+            click: function($event) {
+              return _vm.remove(_vm.category.id)
+            }
+          }
+        },
+        [_vm._v("\n        Delete\n    ")]
       )
     ],
     1
@@ -47427,16 +47496,16 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     name: 'categories',
     component: _pages_Categories_Index__WEBPACK_IMPORTED_MODULE_10__["default"]
   }, {
+    path: '/categories/create',
+    name: 'createCategory',
+    component: _pages_Categories_CategoryForm__WEBPACK_IMPORTED_MODULE_12__["default"]
+  }, {
     path: '/categories/:id',
     name: 'showCategory',
     component: _pages_Categories_Show__WEBPACK_IMPORTED_MODULE_11__["default"]
   }, {
     path: '/categories/:id/edit',
     name: 'editCategory',
-    component: _pages_Categories_CategoryForm__WEBPACK_IMPORTED_MODULE_12__["default"]
-  }, {
-    path: '/categories/create',
-    name: 'createCategory',
     component: _pages_Categories_CategoryForm__WEBPACK_IMPORTED_MODULE_12__["default"]
   }, {
     path: '/register',

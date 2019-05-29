@@ -4,11 +4,14 @@
         <v-layout row wrap mt-5 mb-5>
             <CategoryCard v-for="category in categories" :key="category.id" :category="category"/>
         </v-layout>
-            <v-pagination
-                v-model="page"
-                :length="total/10"
-                @input="next"
-            ></v-pagination>
+        <v-btn color="success" @click="$router.push('/categories/create')">
+        Create new category
+        </v-btn>
+        <v-pagination
+            v-model="page"
+            :length="(total%10 === 0)? total/10 : total/10+1"
+            @input="next"
+        ></v-pagination>
     </div>
 </template>
 <script>

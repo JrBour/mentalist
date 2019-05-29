@@ -11,6 +11,9 @@
         <v-btn color="success" @click="$router.push(`/categories/${category.id}/edit`)">
             Edit
         </v-btn>
+        <v-btn color="error" @click="remove(category.id)">
+            Delete
+        </v-btn>
 
     </div>
 </template>
@@ -35,6 +38,14 @@ export default {
         const articlesResponse = await axios.get(`categories/${id}/articles`);
         if (articlesResponse.status === 200){
             this.articles = articlesResponse.data;
+        }
+    },
+    methods: {
+        remove: async function (id){
+            const response = await axios.delete(`categories/${id}`);
+            if (response.status === 204){
+                this.$router.push('/categories');
+            }
         }
     }
 }

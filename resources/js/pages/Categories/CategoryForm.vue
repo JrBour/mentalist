@@ -12,7 +12,7 @@
                 color="success"
                 @click="submit"
             >
-                {{ id !== null ? 'Edit' : 'Create' }}
+                {{ id ? 'Edit' : 'Create' }}
             </v-btn>
         </v-container>
     </v-form>
@@ -30,7 +30,7 @@ export default {
     }),
     mounted: async function (){
         this.id = this.$route.params.id;
-        if (this.id !== null){
+        if (this.id){
             const response = await axios.get(`categories/${this.id}`);
             if (response.status === 200){
                 this.name = response.data.name;
@@ -39,7 +39,7 @@ export default {
     },
     methods: {
         submit: async function (){
-            if (this.id !== null){
+            if (this.id){
                 const response = await axios.put(`categories/${this.id}`, {name : this.name});
                 if (response.status === 200){
                     this.name = response.data.name;
@@ -47,7 +47,7 @@ export default {
                 }
             } else {
                 const response = await axios.post(`categories`, {name : this.name});
-                if (response.status === 200){
+                if (response.status === 201){
                     this.name = response.data.name;
                     this.$router.push('/categories');
                 }

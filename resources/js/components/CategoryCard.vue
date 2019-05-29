@@ -1,5 +1,5 @@
 <template>
-    <v-flex xs12 sm6>
+    <v-flex xs12 sm6 @click="$router.push(`/categories/${category.id}`)">
         <v-card>
             <v-card-title primary-title>
                 <h3 class="headline mb-0">{{ category.name }}</h3>

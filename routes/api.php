@@ -9,3 +9,4 @@ Route::apiResource('likes', 'LikeController');
 Route::post('/login', 'UserController@login');
 
 Route::get('/users/{id}/articles', 'UserController@getArticlesByUser');
+Route::get('/categories/{id}/articles', 'CategoryController@getArticlesByCategory');

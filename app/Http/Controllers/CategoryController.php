@@ -49,7 +49,37 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return DB::table('categories')->paginate(15);
+        return DB::table('categories')->paginate(10);
+    }
+
+
+    /**
+     *  @OA\Get(
+     *      path="/categories/{id}/articles",
+     *      operationId="getArticlesBycategory",
+     *      tags={"userArticles"},
+     *      summary="Get articles by category",
+     *      @OA\Parameter(
+     *          in="path",
+     *          name="id",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/Article"),
+     *       )
+     * )
+     *
+     * @param int $id
+     * @return \Illuminate\Support\Collection
+     */
+    public function getArticlesByCategory(int $id)
+    {
+        return DB::table('articles')->where('category_id', $id)->get();
     }
 
     /**

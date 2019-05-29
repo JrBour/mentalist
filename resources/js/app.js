@@ -13,6 +13,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Categories from './pages/Categories/Index';
+import ShowCategory from './pages/Categories/Show';
 import Profile from './pages/Profile/Profile';
 import ProfileEdit from './pages/Profile/ProfileEdit';
 
@@ -35,6 +36,11 @@ const router = new VueRouter({
             path: '/categories',
             name: 'categories',
             component: Categories
+        },
+        {
+            path: '/categories/:id',
+            name: 'showCategory',
+            component: ShowCategory
         },
         {
             path: '/register',

@@ -208,8 +208,7 @@ class UserController extends Controller
      *          response=200,
      *          description="successful operation",
      *          @OA\JsonContent(ref="#/components/schemas/User"),
-     *       ),
-     *       @OA\Response(response=400, description="Bad request"),
+     *       )
      * )
      *
      * Get articles by user

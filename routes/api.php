@@ -7,3 +7,5 @@ Route::apiResource('comments', 'CommentController');
 Route::apiResource('likes', 'LikeController');
 
 Route::post('/login', 'UserController@login');
+
+Route::get('/users/{id}/articles', 'UserController@getArticlesByUser');

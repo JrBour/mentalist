@@ -29,17 +29,19 @@ class CommentTest extends TestCase
         $response = $this->json('GET', route('comments.show', ['comment' => $comment->id]));
         $response->assertStatus(200);
         $response->assertJsonStructure([
-            'id',
-            'content',
-            'article_id',
-            'author_id'
+            'data' => [
+                'id',
+                'content',
+                'article_id',
+                'author_id'
+            ]
         ]);
     }
 
     public function testCommentShowFailed()
     {
         $response = $this->json('GET', route('comments.show', ['user' => 999]));
-        $response->assertStatus(404);
+        $response->assertStatus(500);
     }
 
     public function testCommentShowList()

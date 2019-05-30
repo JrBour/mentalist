@@ -91,9 +91,8 @@ class CommentController extends Controller
 
     }
 
-
     /**
-     * @OA\Get(
+     *  @OA\Get(
      *      path="/comments/{id}",
      *      operationId="getComment",
      *      tags={"comment"},
@@ -115,8 +114,8 @@ class CommentController extends Controller
      * )
      * Get comment by id
      *
-     * @param Comment $comment
-     * @return Comment
+     * @param int $id
+     * @return CommentResource
      */
     public function show(int $id)
     {

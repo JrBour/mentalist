@@ -20,18 +20,18 @@ class ArticleTest extends TestCase
         return ['category_id' => $category->id, 'author_id' => $user->id];
     }
 
-    public function testCommentShow()
+    public function testArticleShow()
     {
         $relationship = $this->createRelationshipObjectForArticle();
         $article = factory(Article::class)->create(['author_id' => $relationship['author_id'], 'category_id' => $relationship['category_id']]);
         $response = $this->json('GET', route('articles.show', ['article' => $article->id]));
         $response->assertStatus(200);
         $response->assertJsonStructure([
-            'id',
-            'title',
-            'content',
-            'category_id',
-            'author_id'
+            'data'=> [
+                'id',
+                'title',
+                'content'
+            ]
         ]);
     }
 

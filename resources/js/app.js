@@ -19,6 +19,7 @@ import CategoryForm from './pages/Categories/CategoryForm';
 
 import Comments from './pages/Comments/Index';
 import ShowComment from './pages/Comments/Show';
+import EditComment from './pages/Comments/CommentForm';
 
 import Articles from './pages/Articles/Index';
 import ShowArticle from './pages/Articles/Show';
@@ -51,6 +52,11 @@ const router = new VueRouter({
             path: '/comments/:id',
             name: 'comment',
             component:ShowComment 
+        },
+        {
+            path: '/comments/:id/edit',
+            name: 'editComment',
+            component:EditComment 
         },
         {
             path: '/categories',

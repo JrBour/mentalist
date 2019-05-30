@@ -20,6 +20,7 @@ class Comment extends JsonResource
             'id' => $this->id,
             'content' => $this->content,
             'author_id' => new UserResource(User::find($this->author_id)),
+            'article_id' => $this->article_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

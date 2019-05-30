@@ -19,7 +19,7 @@ export default {
     data: () => ({
         comments: [],
         content: '',
-        total : 0,
+        totalPage : 0,
         page: 1
     }),
     components:{
@@ -28,7 +28,6 @@ export default {
     mounted: async function(){
         const response = await axios.get('comments');
         if (response.status === 200){
-            console.log(response.data.data);
             this.comments = response.data.data;
             this.totalPage = response.data.meta.last_page;
         }

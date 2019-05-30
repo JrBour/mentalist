@@ -11,6 +11,7 @@
         <v-btn v-if="$store.getters.admin" color="error" @click="remove(article.id)">
             Delete
         </v-btn>
+        <v-btn flat color="orange" v-if="this.$store.getters.user !== null" @click="handleLike">{{ like ? 'Unlike' : 'Like' }}</v-btn>
        <CommentCard v-for="comment in comments" :key="comment.id" :comment="comment"/>
         <v-form v-if="$store.getters.users !== null">
             <v-container>
@@ -42,6 +43,7 @@ export default {
         article: null,
         comments: [],
         content: '',
+        like: false,
         fieldRules: [
             v => !!v || 'This field is required',
         ],
@@ -50,14 +52,38 @@ export default {
         const id = this.$route.params.id;
         const articleResponse = await axios.get(`articles/${id}`);
         if (articleResponse.status === 200){
-            this.article = articleResponse.data
+            this.article = articleResponse.data.data
         }
         const commentsResponse = await axios.get(`articles/${id}/comments`);
         if (commentsResponse.status === 200){
             this.comments = commentsResponse.data.data
         }
+        const like = this.article.likes.map(like => like.user_id === +localStorage.getItem('userId'));
+        this.like = like.includes(true);
     },
     methods: {
+        handleLike: async function (){
+            if (this.like){
+                const like = this.articleMutable.likes.find(like => like.user_id === +localStorage.getItem('userId'));
+                const response = await axios.delete(`likes/${like.id}`);
+                if (response.status === 204){
+                    this.like = false;
+                }
+            } else {
+                const data = {
+                    article_id : this.article.id,
+                    user_id: this.$store.getters.user.id
+                };
+                const response = await axios.post('likes', data);
+                if (response.status === 201){
+                    this.like = true;
+                }
+            }
+            const article = await axios.get(`articles/${this.article.id}`);
+            if (article.status === 200){
+                this.articleMutable = article.data.data;
+            }
+        },
         remove: async function (id){
             const response = await axios.delete(`articles/${id}`);
             if (response.status === 204){

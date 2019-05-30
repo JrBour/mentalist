@@ -3137,6 +3137,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3148,6 +3149,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       article: null,
       comments: [],
       content: '',
+      like: false,
       fieldRules: [function (v) {
         return !!v || 'This field is required';
       }]
@@ -3157,7 +3159,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var _mounted = _asyncToGenerator(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var id, articleResponse, commentsResponse;
+      var id, articleResponse, commentsResponse, like;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -3170,7 +3172,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               articleResponse = _context.sent;
 
               if (articleResponse.status === 200) {
-                this.article = articleResponse.data;
+                this.article = articleResponse.data.data;
               }
 
               _context.next = 7;
@@ -3183,7 +3185,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.comments = commentsResponse.data.data;
               }
 
-            case 9:
+              like = this.article.likes.map(function (like) {
+                return like.user_id === +localStorage.getItem('userId');
+              });
+              this.like = like.includes(true);
+
+            case 11:
             case "end":
               return _context.stop();
           }
@@ -3198,20 +3205,91 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return mounted;
   }(),
   methods: {
-    remove: function () {
-      var _remove = _asyncToGenerator(
+    handleLike: function () {
+      var _handleLike = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(id) {
-        var response;
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var like, response, data, _response, article;
+
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
+                if (!this.like) {
+                  _context2.next = 8;
+                  break;
+                }
+
+                like = this.articleMutable.likes.find(function (like) {
+                  return like.user_id === +localStorage.getItem('userId');
+                });
+                _context2.next = 4;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("likes/".concat(like.id));
+
+              case 4:
+                response = _context2.sent;
+
+                if (response.status === 204) {
+                  this.like = false;
+                }
+
+                _context2.next = 13;
+                break;
+
+              case 8:
+                data = {
+                  article_id: this.article.id,
+                  user_id: this.$store.getters.user.id
+                };
+                _context2.next = 11;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('likes', data);
+
+              case 11:
+                _response = _context2.sent;
+
+                if (_response.status === 201) {
+                  this.like = true;
+                }
+
+              case 13:
+                _context2.next = 15;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("articles/".concat(this.article.id));
+
+              case 15:
+                article = _context2.sent;
+
+                if (article.status === 200) {
+                  this.articleMutable = article.data.data;
+                }
+
+              case 17:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function handleLike() {
+        return _handleLike.apply(this, arguments);
+      }
+
+      return handleLike;
+    }(),
+    remove: function () {
+      var _remove = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(id) {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("articles/".concat(id));
 
               case 2:
-                response = _context2.sent;
+                response = _context3.sent;
 
                 if (response.status === 204) {
                   this.$router.push('/articles');
@@ -3219,10 +3297,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 4:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee3, this);
       }));
 
       function remove(_x) {
@@ -3234,11 +3312,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     submit: function () {
       var _submit = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var id, data, response, commentsResponse;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 id = this.$route.params.id;
                 data = {
@@ -3246,23 +3324,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   author_id: this.$store.getters.user.id,
                   article_id: id
                 };
-                _context3.next = 4;
+                _context4.next = 4;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("comments", data);
 
               case 4:
-                response = _context3.sent;
+                response = _context4.sent;
 
                 if (!(response.status === 201)) {
-                  _context3.next = 11;
+                  _context4.next = 11;
                   break;
                 }
 
                 this.content = '';
-                _context3.next = 9;
+                _context4.next = 9;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("articles/".concat(id, "/comments"));
 
               case 9:
-                commentsResponse = _context3.sent;
+                commentsResponse = _context4.sent;
 
                 if (commentsResponse.status === 200) {
                   this.comments = commentsResponse.data.data;
@@ -3270,10 +3348,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 11:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee4, this);
       }));
 
       function submit() {
@@ -6421,6 +6499,17 @@ var render = function() {
               }
             },
             [_vm._v("\n        Delete\n    ")]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      this.$store.getters.user !== null
+        ? _c(
+            "v-btn",
+            {
+              attrs: { flat: "", color: "orange" },
+              on: { click: _vm.handleLike }
+            },
+            [_vm._v(_vm._s(_vm.like ? "Unlike" : "Like"))]
           )
         : _vm._e(),
       _vm._v(" "),

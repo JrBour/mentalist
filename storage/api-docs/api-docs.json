@@ -67,6 +67,37 @@
                 }
             }
         },
+        "/articles/{id}/comments": {
+            "get": {
+                "tags": [
+                    "article"
+                ],
+                "summary": "Get comments by article",
+                "operationId": "getCommentsByArticle",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Comment"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/articles/{id}": {
             "get": {
                 "tags": [
@@ -216,6 +247,37 @@
                     },
                     "400": {
                         "description": "Bad request"
+                    }
+                }
+            }
+        },
+        "/categories/{id}/articles": {
+            "get": {
+                "tags": [
+                    "category"
+                ],
+                "summary": "Get articles by category",
+                "operationId": "getArticlesBycategory",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Article"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -399,8 +461,8 @@
                             }
                         }
                     },
-                    "400": {
-                        "description": "Bad request"
+                    "404": {
+                        "description": "Resource not found"
                     }
                 }
             },
@@ -442,6 +504,9 @@
                     },
                     "400": {
                         "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource not found"
                     }
                 }
             },
@@ -465,8 +530,8 @@
                     "204": {
                         "description": "successful operation"
                     },
-                    "400": {
-                        "description": "Bad request"
+                    "404": {
+                        "description": "Resource not found"
                     }
                 }
             }
@@ -698,6 +763,9 @@
                 "responses": {
                     "200": {
                         "description": "successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
                     }
                 }
             }
@@ -721,14 +789,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/User"
-                                }
-                            }
-                        }
+                        "description": "successful operation"
                     },
                     "400": {
                         "description": "Bad request"
@@ -804,6 +865,37 @@
                     }
                 }
             }
+        },
+        "/users/{id}/articles": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Get articles by user",
+                "operationId": "getArticlesByUser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -826,11 +918,11 @@
                     "content": {
                         "type": "string"
                     },
-                    "author": {
+                    "author_id": {
                         "description": "The author of the article",
                         "type": "integer"
                     },
-                    "category": {
+                    "category_id": {
                         "description": "The category of the article",
                         "type": "integer"
                     }
@@ -866,11 +958,11 @@
                     "content": {
                         "type": "string"
                     },
-                    "article": {
+                    "article_id": {
                         "description": "The article related to comment",
                         "type": "integer"
                     },
-                    "author": {
+                    "author_id": {
                         "description": "The author of the comment",
                         "type": "integer"
                     }
@@ -887,11 +979,11 @@
                         "type": "integer",
                         "readOnly": "true"
                     },
-                    "article": {
+                    "article_id": {
                         "description": "The article related to like",
                         "type": "integer"
                     },
-                    "user": {
+                    "user_id": {
                         "description": "The user related to like",
                         "type": "integer"
                     }

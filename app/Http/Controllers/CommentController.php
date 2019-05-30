@@ -110,7 +110,7 @@ class CommentController extends Controller
      *          description="successful operation",
      *          @OA\JsonContent(ref="#/components/schemas/Comment"),
      *       ),
-     *       @OA\Response(response=400, description="Bad request"),
+     *     @OA\Response(response=404, description="Resource not found"),
      * )
      * Get comment by id
      *
@@ -146,6 +146,7 @@ class CommentController extends Controller
      *          @OA\JsonContent(ref="#/components/schemas/Comment")
      *     ),
      *     @OA\Response(response=400, description="Bad request"),
+     *     @OA\Response(response=404, description="Resource not found"),
      * )
      * Update comment.
      *
@@ -186,7 +187,7 @@ class CommentController extends Controller
      *          response=204,
      *          description="successful operation"
      *       ),
-     *       @OA\Response(response=400, description="Bad request"),
+     *     @OA\Response(response=404, description="Resource not found"),
      * )
      * Remove comment
      *

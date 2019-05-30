@@ -44,6 +44,26 @@ paths:
           description: 'successful operation'
         400:
           description: 'Bad request'
+  '/articles/{id}/comments':
+    get:
+      tags:
+        - article
+      summary: 'Get comments by article'
+      operationId: getCommentsByArticle
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
   '/articles/{id}':
     get:
       tags:
@@ -143,6 +163,26 @@ paths:
           description: 'successful operation'
         400:
           description: 'Bad request'
+  '/categories/{id}/articles':
+    get:
+      tags:
+        - category
+      summary: 'Get articles by category'
+      operationId: getArticlesBycategory
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
   '/categories/{id}':
     get:
       tags:
@@ -261,8 +301,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Comment'
-        400:
-          description: 'Bad request'
+        404:
+          description: 'Resource not found'
     put:
       tags:
         - comment
@@ -289,6 +329,8 @@ paths:
                 $ref: '#/components/schemas/Comment'
         400:
           description: 'Bad request'
+        404:
+          description: 'Resource not found'
     delete:
       tags:
         - comment
@@ -304,8 +346,8 @@ paths:
       responses:
         204:
           description: 'successful operation'
-        400:
-          description: 'Bad request'
+        404:
+          description: 'Resource not found'
   /likes:
     get:
       tags:
@@ -455,6 +497,8 @@ paths:
       responses:
         200:
           description: 'successful operation'
+        401:
+          description: Unauthorized
   '/users/{id}':
     get:
       tags:
@@ -471,10 +515,6 @@ paths:
       responses:
         200:
           description: 'successful operation'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
         400:
           description: 'Bad request'
     put:
@@ -522,6 +562,26 @@ paths:
           description: 'successful operation'
         404:
           description: 'Resource not found'
+  '/users/{id}/articles':
+    get:
+      tags:
+        - user
+      summary: 'Get articles by user'
+      operationId: getArticlesByUser
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 'successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
 components:
   schemas:
     Article:
@@ -538,10 +598,10 @@ components:
           type: string
         content:
           type: string
-        author:
+        author_id:
           description: 'The author of the article'
           type: integer
-        category:
+        category_id:
           description: 'The category of the article'
           type: integer
       type: object
@@ -566,10 +626,10 @@ components:
           readOnly: 'true'
         content:
           type: string
-        article:
+        article_id:
           description: 'The article related to comment'
           type: integer
-        author:
+        author_id:
           description: 'The author of the comment'
           type: integer
       type: object
@@ -581,10 +641,10 @@ components:
         id:
           type: integer
           readOnly: 'true'
-        article:
+        article_id:
           description: 'The article related to like'
           type: integer
-        user:
+        user_id:
           description: 'The user related to like'
           type: integer
       type: object

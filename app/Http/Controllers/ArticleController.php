@@ -96,9 +96,9 @@ class ArticleController extends Controller
 
     /**
      * @OA\Get(
-     *      path="/arrticles/{id}/comments",
+     *      path="/articles/{id}/comments",
      *      operationId="getCommentsByArticle",
-     *      tags={"commentsArticle"},
+     *      tags={"article"},
      *      summary="Get comments by article",
      *      @OA\Parameter(
      *          in="path",

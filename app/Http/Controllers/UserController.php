@@ -126,7 +126,8 @@ class UserController extends Controller
      *                  @OA\Property(property="password", type="string"),
      *              )
      *          )
-     *      )
+     *      ),
+     *      @OA\Response(response=401, description="Unauthorized")
      * )
      *
      * Sign in an user
@@ -199,7 +200,7 @@ class UserController extends Controller
      *  @OA\Get(
      *      path="/users/{id}/articles",
      *      operationId="getArticlesByUser",
-     *      tags={"userArticles"},
+     *      tags={"user"},
      *      summary="Get articles by user",
      *      @OA\Parameter(
      *          in="path",

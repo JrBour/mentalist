@@ -56,7 +56,7 @@ class CategoryController extends Controller
      *  @OA\Get(
      *      path="/categories/{id}/articles",
      *      operationId="getArticlesBycategory",
-     *      tags={"userArticles"},
+     *      tags={"category"},
      *      summary="Get articles by category",
      *      @OA\Parameter(
      *          in="path",

@@ -23,11 +23,11 @@ class Like extends Model
 
     public function article()
     {
-        return $this->belongsTo('App\Article');
+        return $this->belongsTo('App\Article', 'article_id');
     }
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'user_id');
     }
 }

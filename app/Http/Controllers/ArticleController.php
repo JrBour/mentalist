@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Http\Resources\Article as ArticleResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
@@ -52,7 +53,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        return DB::table('articles')->paginate(10);
+        return ArticleResource::collection(DB::table('articles')->paginate(10));
     }
 
     /**

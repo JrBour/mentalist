@@ -2621,6 +2621,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2638,8 +2648,95 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['article']
+  props: ['article'],
+  data: function data() {
+    return {
+      like: false,
+      articleMutable: null
+    };
+  },
+  mounted: function mounted() {
+    this.articleMutable = this.article;
+    var like = this.articleMutable.likes.map(function (like) {
+      return like.user_id === +localStorage.getItem('userId');
+    });
+    this.like = like.includes(true);
+  },
+  methods: {
+    handleLike: function () {
+      var _handleLike = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var like, response, data, _response, article;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!this.like) {
+                  _context.next = 8;
+                  break;
+                }
+
+                like = this.articleMutable.likes.find(function (like) {
+                  return like.user_id === +localStorage.getItem('userId');
+                });
+                _context.next = 4;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("likes/".concat(like.id));
+
+              case 4:
+                response = _context.sent;
+
+                if (response.status === 204) {
+                  this.like = false;
+                }
+
+                _context.next = 13;
+                break;
+
+              case 8:
+                data = {
+                  article_id: this.article.id,
+                  user_id: this.$store.getters.user.id
+                };
+                _context.next = 11;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('likes', data);
+
+              case 11:
+                _response = _context.sent;
+
+                if (_response.status === 201) {
+                  this.like = true;
+                }
+
+              case 13:
+                _context.next = 15;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("articles/".concat(this.article.id));
+
+              case 15:
+                article = _context.sent;
+
+                if (article.status === 200) {
+                  this.articleMutable = article.data.data;
+                }
+
+              case 17:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function handleLike() {
+        return _handleLike.apply(this, arguments);
+      }
+
+      return handleLike;
+    }()
+  }
 });
 
 /***/ }),
@@ -5955,9 +6052,16 @@ var render = function() {
           _c(
             "v-card-actions",
             [
-              _c("v-btn", { attrs: { flat: "", color: "orange" } }, [
-                _vm._v("Like")
-              ]),
+              this.$store.getters.user !== null
+                ? _c(
+                    "v-btn",
+                    {
+                      attrs: { flat: "", color: "orange" },
+                      on: { click: _vm.handleLike }
+                    },
+                    [_vm._v(_vm._s(_vm.like ? "Unlike" : "Like"))]
+                  )
+                : _vm._e(),
               _vm._v(" "),
               _c(
                 "v-btn",

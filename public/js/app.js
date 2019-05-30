@@ -4326,6 +4326,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -4355,7 +4356,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 0:
               this.id = this.$route.params.id;
 
-              if (!(this.id !== null)) {
+              if (!this.id) {
                 _context.next = 8;
                 break;
               }
@@ -4405,7 +4406,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 if (response.status === 200) {
                   delete this.user.password;
 
-                  if (this.id === null) {
+                  if (this.id === undefined) {
                     this.$store.commit('setUser', this.user);
                     this.$router.push('/profile');
                   } else {
@@ -5849,13 +5850,19 @@ var render = function() {
                 _vm._v("\n                Articles\n            ")
               ]),
               _vm._v(" "),
-              _c("v-btn", { attrs: { flat: "", to: { name: "comments" } } }, [
-                _vm._v("\n                Comments\n            ")
-              ]),
+              _vm.$store.getters.admin
+                ? _c(
+                    "v-btn",
+                    { attrs: { flat: "", to: { name: "comments" } } },
+                    [_vm._v("\n                Comments\n            ")]
+                  )
+                : _vm._e(),
               _vm._v(" "),
-              _c("v-btn", { attrs: { flat: "", to: { name: "users" } } }, [
-                _vm._v("\n                Users\n            ")
-              ]),
+              _vm.$store.getters.admin
+                ? _c("v-btn", { attrs: { flat: "", to: { name: "users" } } }, [
+                    _vm._v("\n                Users\n            ")
+                  ])
+                : _vm._e(),
               _vm._v(" "),
               _vm.$store.getters.user === null
                 ? _c("v-btn", { attrs: { flat: "", to: { name: "login" } } }, [
@@ -6052,15 +6059,25 @@ var render = function() {
         "v-list-tile",
         { key: _vm.comment.id },
         [
-          _c("v-list-tile-avatar", [
-            _c("img", {
-              attrs: {
-                src:
-                  "https://www.gravatar.com/avatar/" +
-                  _vm.comment.author_id.email_hashed
+          _c(
+            "v-list-tile-avatar",
+            {
+              on: {
+                click: function($event) {
+                  return _vm.$router.push("/users/" + _vm.comment.author_id.id)
+                }
               }
-            })
-          ]),
+            },
+            [
+              _c("img", {
+                attrs: {
+                  src:
+                    "https://www.gravatar.com/avatar/" +
+                    _vm.comment.author_id.email_hashed
+                }
+              })
+            ]
+          ),
           _vm._v(" "),
           _c(
             "v-list-tile-content",
@@ -6940,7 +6957,7 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm.$route.params.id === null
+                _vm.$route.params.id === undefined
                   ? _c(
                       "v-btn",
                       {
@@ -6972,7 +6989,7 @@ var render = function() {
                   1
                 ),
                 _vm._v(" "),
-                _vm.$store.getters.admin
+                _vm.$store.getters.admin && _vm.$route.params.id
                   ? _c(
                       "v-btn",
                       {
@@ -6989,7 +7006,7 @@ var render = function() {
                     )
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.$store.getters.admin
+                _vm.$store.getters.admin && _vm.$route.params.id
                   ? _c(
                       "v-btn",
                       {
@@ -7104,18 +7121,20 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _c("v-checkbox", {
-                attrs: { label: "Admin" },
-                model: {
-                  value: _vm.user.admin,
-                  callback: function($$v) {
-                    _vm.$set(_vm.user, "admin", $$v)
-                  },
-                  expression: "user.admin"
-                }
-              }),
+              _vm.id
+                ? _c("v-checkbox", {
+                    attrs: { label: "Admin" },
+                    model: {
+                      value: _vm.user.admin,
+                      callback: function($$v) {
+                        _vm.$set(_vm.user, "admin", $$v)
+                      },
+                      expression: "user.admin"
+                    }
+                  })
+                : _vm._e(),
               _vm._v(" "),
-              _vm.id === null
+              _vm.id === undefined
                 ? _c("v-text-field", {
                     attrs: {
                       label: "Password",

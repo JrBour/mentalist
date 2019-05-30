@@ -11,10 +11,10 @@
                 <v-btn flat :to="{ name: 'articles' }">
                     Articles
                 </v-btn>
-                <v-btn flat :to="{ name: 'comments' }">
+                <v-btn flat v-if="$store.getters.admin" :to="{ name: 'comments' }">
                     Comments
                 </v-btn>
-                <v-btn flat :to="{ name: 'users' }">
+                <v-btn flat v-if="$store.getters.admin" :to="{ name: 'users' }">
                     Users
                 </v-btn>
                 <v-btn v-if="$store.getters.user === null" flat :to="{ name: 'login' }">

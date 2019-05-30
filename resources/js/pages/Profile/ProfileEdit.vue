@@ -26,11 +26,12 @@
                         required
                     ></v-text-field>
                     <v-checkbox
+                        v-if="id"
                         label="Admin"
                         v-model="user.admin"
                     ></v-checkbox>
                     <v-text-field
-                        v-if="id === null"
+                        v-if="id === undefined"
                         v-model="user.password"
                         label="Password"
                         :rules="fieldRules"
@@ -67,7 +68,7 @@
         }),
         mounted: async function(){
             this.id = this.$route.params.id;
-            if (this.id !== null){
+            if (this.id){
                 const response = await axios.get(`users/${this.id}`);
                 if (response.status === 200)
                     this.user = response.data; 
@@ -81,7 +82,7 @@
                 const response = await axios.put(`users/${this.user.id}`, this.user);
                 if (response.status === 200){
                     delete this.user.password;
-                    if (this.id === null){
+                    if (this.id === undefined){
                         this.$store.commit('setUser', this.user)
                         this.$router.push('/profile');
                     } else {

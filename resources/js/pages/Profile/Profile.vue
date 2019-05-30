@@ -8,17 +8,17 @@
                 <li>Email : <b>{{ user.email }}</b></li>
                 <li>Role : <b>{{ user.admin ? 'Administrator' : 'User' }}</b></li>
             </ul>
-            <v-btn v-if="$route.params.id === null" color="success" @click="$router.push('profile/edit')">
+            <v-btn v-if="$route.params.id === undefined" color="success" @click="$router.push('profile/edit')">
                 Edit profile
             </v-btn>
             <h2 class="display-2">{{ $route.params.id ? 'His' : 'Your' }} articles</h2>
             <v-layout>
                 <ArticleCard v-for="article in articles" :key="article.id" :article="article"/>
             </v-layout>
-            <v-btn v-if="$store.getters.admin" color="success" @click="$router.push(`/users/${user.id}/edit`)">
+            <v-btn v-if="$store.getters.admin && $route.params.id" color="success" @click="$router.push(`/users/${user.id}/edit`)">
                 Edit
             </v-btn>
-            <v-btn v-if="$store.getters.admin" color="error" @click="remove(user.id)">
+            <v-btn v-if="$store.getters.admin && $route.params.id" color="error" @click="remove(user.id)">
                 Delete
             </v-btn>
         </div>

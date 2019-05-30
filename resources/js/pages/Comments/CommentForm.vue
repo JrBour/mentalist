@@ -34,7 +34,6 @@ export default {
         const response = await axios.get(`comments/${id}`);
         if (response.status === 200){
             this.comment.content = response.data.data.content;
-            console.log(response.data.data);
             this.comment.articleId = response.data.data.article_id;
         }
     },

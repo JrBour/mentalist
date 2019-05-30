@@ -36,16 +36,14 @@
                 </v-list>
             </v-card>
         </v-flex>
-        <v-layout>
-            <v-flex xs12 sm6>
-                <v-pagination
-                    v-if="totalPage !== 0 && !searching"
-                    v-model="page"
-                    :length="totalPage"
-                    @input="changePage"
-                ></v-pagination>
-            </v-flex>
-        </v-layout>
+        <div class="text-xs-center">
+            <v-pagination
+                v-if="totalPage !== 0 && !searching"
+                v-model="page"
+                :length="totalPage"
+                @input="changePage"
+            ></v-pagination>
+        </div>
     </div>
 </template>
 <script>

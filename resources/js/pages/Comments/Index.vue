@@ -1,14 +1,14 @@
 <template>
     <div>
        <CommentCard v-for="comment in comments" :key="comment.id" :comment="comment"/>
-        <v-flex xs12 sm6>
+        <div class="text-xs-center">
             <v-pagination
                 v-if="totalPage !== 0"
                 v-model="page"
                 :length="totalPage"
                 @input="changePage"
             ></v-pagination>
-        </v-flex>
+        </div>
     </div>
 </template>
 <script>

@@ -4,14 +4,14 @@
         <v-layout row wrap mt-5 mb-5>
             <ArticleCard v-for="article in articles" :key="article.id" :article="article"/>
         </v-layout>
-        <v-flex xs12 sm6>
+        <div class="text-xs-center">
             <v-pagination
-                v-if="total !== 0"
+                v-if="totalPage !== 0"
                 v-model="page"
-                :length="(total%10 === 0) ? total/10 : total/10+1"
-                @input="next"
+                :length="totalPage"
+                @input="changePage"
             ></v-pagination>
-        </v-flex>
+        </div>
     </div>
 </template>
 <script>
@@ -24,11 +24,11 @@ export default {
     },
     data: () => ({
         articles: null,
-        total: 0,
+        totalPage: 0,
         page: 1
     }),
     methods : {
-        next: async function (page){
+        changePage: async function (page){
             const articles = await axios.get(`articles?page=${page}`);
             if (articles.status === 200){
                 this.articles = articles.data.data;
@@ -39,7 +39,7 @@ export default {
         const articles = await axios.get('articles');
         if (articles.status === 200){
             this.articles = articles.data.data;
-            this.total = articles.data.total;
+            this.totalPage = articles.data.meta.last_page;
         }
     }
 }

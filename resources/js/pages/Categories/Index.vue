@@ -7,14 +7,14 @@
         <v-btn color="success" @click="$router.push('/categories/create')">
             Create new category
         </v-btn>
-        <v-flex xs12 sm6>
+        <div class="text-xs-center">
             <v-pagination
-                v-if="total !== 0"
+                v-if="totalPage !== 0"
                 v-model="page"
-                :length="(total%10 === 0) ? total/10 : total/10+1"
-                @input="next"
+                :length="totalPage"
+                @input="changePage"
             ></v-pagination>
-        </v-flex>
+        </div>
     </div>
 </template>
 <script>
@@ -27,11 +27,11 @@ export default {
     },
     data: () => ({
         categories: null,
-        total: 0,
+        totalPage: 0,
         page: 1
     }),
     methods : {
-        next: async function (page){
+        changePage: async function (page){
             const categories = await axios.get(`categories?page=${page}`);
             if (categories.status === 200){
                 this.categories = categories.data.data;
@@ -42,7 +42,7 @@ export default {
         const categories = await axios.get('categories');
         if (categories.status === 200){
             this.categories = categories.data.data;
-            this.total = categories.data.total;
+            this.totalPage = categories.data.last_page;
         }
     }
 }

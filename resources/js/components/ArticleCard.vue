@@ -1,10 +1,10 @@
 <template>
     <v-flex xs12 sm6>
-        <v-card>
+        <v-card v-if="articleMutable">
             <v-card-title primary-title>
                 <div>
-                    <h3 class="headline mb-0">{{ article.title }}</h3>
-                    <div> {{ article.content.slice(100) }}... </div>
+                    <h3 class="headline mb-0">{{ articleMutable.title }}</h3>
+                    <div> {{ articleMutable.content.slice(100) }}... </div>
                 </div>
             </v-card-title>
 
@@ -25,8 +25,8 @@
             like : false,
             articleMutable: null
         }),
-        mounted(){
-            this.articleMutable = this.article
+        mounted: async function(){
+            this.articleMutable = this.article;
             const like = this.articleMutable.likes.map(like => like.user_id === +localStorage.getItem('userId'));
             this.like = like.includes(true);
         },

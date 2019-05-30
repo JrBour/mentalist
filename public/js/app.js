@@ -2657,43 +2657,65 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       articleMutable: null
     };
   },
-  mounted: function mounted() {
-    this.articleMutable = this.article;
-    var like = this.articleMutable.likes.map(function (like) {
-      return like.user_id === +localStorage.getItem('userId');
-    });
-    this.like = like.includes(true);
-  },
+  mounted: function () {
+    var _mounted = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var like;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              this.articleMutable = this.article;
+              like = this.articleMutable.likes.map(function (like) {
+                return like.user_id === +localStorage.getItem('userId');
+              });
+              this.like = like.includes(true);
+
+            case 3:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    }));
+
+    function mounted() {
+      return _mounted.apply(this, arguments);
+    }
+
+    return mounted;
+  }(),
   methods: {
     handleLike: function () {
       var _handleLike = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var like, response, data, _response, article;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
                 if (!this.like) {
-                  _context.next = 8;
+                  _context2.next = 8;
                   break;
                 }
 
                 like = this.articleMutable.likes.find(function (like) {
                   return like.user_id === +localStorage.getItem('userId');
                 });
-                _context.next = 4;
+                _context2.next = 4;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("likes/".concat(like.id));
 
               case 4:
-                response = _context.sent;
+                response = _context2.sent;
 
                 if (response.status === 204) {
                   this.like = false;
                 }
 
-                _context.next = 13;
+                _context2.next = 13;
                 break;
 
               case 8:
@@ -2701,22 +2723,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   article_id: this.article.id,
                   user_id: this.$store.getters.user.id
                 };
-                _context.next = 11;
+                _context2.next = 11;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('likes', data);
 
               case 11:
-                _response = _context.sent;
+                _response = _context2.sent;
 
                 if (_response.status === 201) {
                   this.like = true;
                 }
 
               case 13:
-                _context.next = 15;
+                _context2.next = 15;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("articles/".concat(this.article.id));
 
               case 15:
-                article = _context.sent;
+                article = _context2.sent;
 
                 if (article.status === 200) {
                   this.articleMutable = article.data.data;
@@ -2724,10 +2746,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 17:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this);
+        }, _callee2, this);
       }));
 
       function handleLike() {
@@ -3007,13 +3029,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       articles: null,
-      total: 0,
+      totalPage: 0,
       page: 1
     };
   },
   methods: {
-    next: function () {
-      var _next2 = _asyncToGenerator(
+    changePage: function () {
+      var _changePage = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(page) {
         var articles;
@@ -3039,11 +3061,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee, this);
       }));
 
-      function next(_x) {
-        return _next2.apply(this, arguments);
+      function changePage(_x) {
+        return _changePage.apply(this, arguments);
       }
 
-      return next;
+      return changePage;
     }()
   },
   mounted: function () {
@@ -3063,7 +3085,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               if (articles.status === 200) {
                 this.articles = articles.data.data;
-                this.total = articles.data.total;
+                this.totalPage = articles.data.meta.last_page;
               }
 
             case 4:
@@ -3567,13 +3589,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       categories: null,
-      total: 0,
+      totalPage: 0,
       page: 1
     };
   },
   methods: {
-    next: function () {
-      var _next2 = _asyncToGenerator(
+    changePage: function () {
+      var _changePage = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(page) {
         var categories;
@@ -3599,11 +3621,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee, this);
       }));
 
-      function next(_x) {
-        return _next2.apply(this, arguments);
+      function changePage(_x) {
+        return _changePage.apply(this, arguments);
       }
 
-      return next;
+      return changePage;
     }()
   },
   mounted: function () {
@@ -3623,7 +3645,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               if (categories.status === 200) {
                 this.categories = categories.data.data;
-                this.total = categories.data.total;
+                this.totalPage = categories.data.last_page;
               }
 
             case 4:
@@ -3851,7 +3873,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               if (response.status === 200) {
                 this.comment.content = response.data.data.content;
-                console.log(response.data.data);
                 this.comment.articleId = response.data.data.article_id;
               }
 
@@ -4158,11 +4179,102 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _components_ArticleCard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/ArticleCard */ "./resources/js/components/ArticleCard.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      articles: [],
+      users: []
+    };
+  },
+  components: {
+    ArticleCard: _components_ArticleCard__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  mounted: function () {
+    var _mounted = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var articlesResponse, usersResponse;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('articles');
+
+            case 2:
+              articlesResponse = _context.sent;
+
+              if (articlesResponse.status === 200) {
+                this.articles = articlesResponse.data.data;
+              }
+
+              _context.next = 6;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('users');
+
+            case 6:
+              usersResponse = _context.sent;
+
+              if (usersResponse.status === 200) {
+                this.users = usersResponse.data.data;
+              }
+
+            case 8:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    }));
+
+    function mounted() {
+      return _mounted.apply(this, arguments);
+    }
+
+    return mounted;
+  }()
+});
 
 /***/ }),
 
@@ -4759,8 +4871,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
-//
 //
 //
 //
@@ -6201,53 +6311,59 @@ var render = function() {
     "v-flex",
     { attrs: { xs12: "", sm6: "" } },
     [
-      _c(
-        "v-card",
-        [
-          _c("v-card-title", { attrs: { "primary-title": "" } }, [
-            _c("div", [
-              _c("h3", { staticClass: "headline mb-0" }, [
-                _vm._v(_vm._s(_vm.article.title))
+      _vm.articleMutable
+        ? _c(
+            "v-card",
+            [
+              _c("v-card-title", { attrs: { "primary-title": "" } }, [
+                _c("div", [
+                  _c("h3", { staticClass: "headline mb-0" }, [
+                    _vm._v(_vm._s(_vm.articleMutable.title))
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _vm._v(
+                      " " +
+                        _vm._s(_vm.articleMutable.content.slice(100)) +
+                        "... "
+                    )
+                  ])
+                ])
               ]),
               _vm._v(" "),
-              _c("div", [
-                _vm._v(" " + _vm._s(_vm.article.content.slice(100)) + "... ")
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "v-card-actions",
-            [
-              this.$store.getters.user !== null
-                ? _c(
+              _c(
+                "v-card-actions",
+                [
+                  this.$store.getters.user !== null
+                    ? _c(
+                        "v-btn",
+                        {
+                          attrs: { flat: "", color: "orange" },
+                          on: { click: _vm.handleLike }
+                        },
+                        [_vm._v(_vm._s(_vm.like ? "Unlike" : "Like"))]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
                     "v-btn",
                     {
                       attrs: { flat: "", color: "orange" },
-                      on: { click: _vm.handleLike }
+                      on: {
+                        click: function($event) {
+                          return _vm.$router.push("/articles/" + _vm.article.id)
+                        }
+                      }
                     },
-                    [_vm._v(_vm._s(_vm.like ? "Unlike" : "Like"))]
+                    [_vm._v("Read more...")]
                   )
-                : _vm._e(),
-              _vm._v(" "),
-              _c(
-                "v-btn",
-                {
-                  attrs: { flat: "", color: "orange" },
-                  on: {
-                    click: function($event) {
-                      return _vm.$router.push("/articles/" + _vm.article.id)
-                    }
-                  }
-                },
-                [_vm._v("Read more...")]
+                ],
+                1
               )
             ],
             1
           )
-        ],
-        1
-      )
+        : _vm._e()
     ],
     1
   )
@@ -6330,25 +6446,29 @@ var render = function() {
         "v-list-tile",
         { key: _vm.comment.id },
         [
-          _c(
-            "v-list-tile-avatar",
-            {
-              on: {
-                click: function($event) {
-                  return _vm.$router.push("/users/" + _vm.comment.author_id.id)
-                }
-              }
-            },
-            [
-              _c("img", {
-                attrs: {
-                  src:
-                    "https://www.gravatar.com/avatar/" +
-                    _vm.comment.author_id.email_hashed
-                }
-              })
-            ]
-          ),
+          _vm.comment.author_id !== null
+            ? _c(
+                "v-list-tile-avatar",
+                {
+                  on: {
+                    click: function($event) {
+                      return _vm.$router.push(
+                        "/users/" + _vm.comment.author_id.id
+                      )
+                    }
+                  }
+                },
+                [
+                  _c("img", {
+                    attrs: {
+                      src:
+                        "https://www.gravatar.com/avatar/" +
+                        _vm.comment.author_id.email_hashed
+                    }
+                  })
+                ]
+              )
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "v-list-tile-content",
@@ -6493,16 +6613,13 @@ var render = function() {
       ),
       _vm._v(" "),
       _c(
-        "v-flex",
-        { attrs: { xs12: "", sm6: "" } },
+        "div",
+        { staticClass: "text-xs-center" },
         [
-          _vm.total !== 0
+          _vm.totalPage !== 0
             ? _c("v-pagination", {
-                attrs: {
-                  length:
-                    _vm.total % 10 === 0 ? _vm.total / 10 : _vm.total / 10 + 1
-                },
-                on: { input: _vm.next },
+                attrs: { length: _vm.totalPage },
+                on: { input: _vm.changePage },
                 model: {
                   value: _vm.page,
                   callback: function($$v) {
@@ -6769,16 +6886,13 @@ var render = function() {
       ),
       _vm._v(" "),
       _c(
-        "v-flex",
-        { attrs: { xs12: "", sm6: "" } },
+        "div",
+        { staticClass: "text-xs-center" },
         [
-          _vm.total !== 0
+          _vm.totalPage !== 0
             ? _c("v-pagination", {
-                attrs: {
-                  length:
-                    _vm.total % 10 === 0 ? _vm.total / 10 : _vm.total / 10 + 1
-                },
-                on: { input: _vm.next },
+                attrs: { length: _vm.totalPage },
+                on: { input: _vm.changePage },
                 model: {
                   value: _vm.page,
                   callback: function($$v) {
@@ -6991,8 +7105,8 @@ var render = function() {
       }),
       _vm._v(" "),
       _c(
-        "v-flex",
-        { attrs: { xs12: "", sm6: "" } },
+        "div",
+        { staticClass: "text-xs-center" },
         [
           _vm.totalPage !== 0
             ? _c("v-pagination", {
@@ -7100,7 +7214,108 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("p", [_vm._v("This is the homepage")])
+  return _c(
+    "div",
+    [
+      _c("h1", { staticClass: "display-4" }, [_vm._v("Mentalist")]),
+      _vm._v(" "),
+      _c("h2", { staticClass: "display-3" }, [_vm._v("Articles")]),
+      _vm._v(" "),
+      _c(
+        "v-layout",
+        { attrs: { row: "", wrap: "", "mt-5": "", "mb-5": "" } },
+        _vm._l(_vm.articles, function(article) {
+          return _c("ArticleCard", {
+            key: article.id,
+            attrs: { article: article }
+          })
+        }),
+        1
+      ),
+      _vm._v(" "),
+      _c("h2", [_vm._v("Users")]),
+      _vm._v(" "),
+      _c(
+        "v-flex",
+        { attrs: { xs12: "", sm6: "", "offset-sm3": "" } },
+        [
+          _c(
+            "v-card",
+            [
+              _c(
+                "v-list",
+                { attrs: { "two-line": "" } },
+                [
+                  _vm._l(_vm.users, function(user) {
+                    return [
+                      user.id !== _vm.$store.getters.user.id
+                        ? _c(
+                            "v-list-tile",
+                            { key: user.id, attrs: { avatar: "" } },
+                            [
+                              _c(
+                                "v-list-tile-avatar",
+                                {
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.$router.push(
+                                        "/users/" + user.id
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("img", {
+                                    attrs: {
+                                      src:
+                                        "https://www.gravatar.com/avatar/" +
+                                        user.email_hashed
+                                    }
+                                  })
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-list-tile-content",
+                                [
+                                  _c("v-list-tile-title", {
+                                    domProps: {
+                                      innerHTML: _vm._s(user.firstname)
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("v-list-tile-title", {
+                                    domProps: {
+                                      innerHTML: _vm._s(user.lastname)
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("v-list-tile-sub-title", {
+                                    domProps: {
+                                      innerHTML: _vm._s(user.username)
+                                    }
+                                  })
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ]
+                  })
+                ],
+                2
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -7726,28 +7941,22 @@ var render = function() {
       ),
       _vm._v(" "),
       _c(
-        "v-layout",
+        "div",
+        { staticClass: "text-xs-center" },
         [
-          _c(
-            "v-flex",
-            { attrs: { xs12: "", sm6: "" } },
-            [
-              _vm.totalPage !== 0 && !_vm.searching
-                ? _c("v-pagination", {
-                    attrs: { length: _vm.totalPage },
-                    on: { input: _vm.changePage },
-                    model: {
-                      value: _vm.page,
-                      callback: function($$v) {
-                        _vm.page = $$v
-                      },
-                      expression: "page"
-                    }
-                  })
-                : _vm._e()
-            ],
-            1
-          )
+          _vm.totalPage !== 0 && !_vm.searching
+            ? _c("v-pagination", {
+                attrs: { length: _vm.totalPage },
+                on: { input: _vm.changePage },
+                model: {
+                  value: _vm.page,
+                  callback: function($$v) {
+                    _vm.page = $$v
+                  },
+                  expression: "page"
+                }
+              })
+            : _vm._e()
         ],
         1
       )

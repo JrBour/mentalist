@@ -22,9 +22,8 @@ use App\Comment;
  */
 class CommentController extends Controller
 {
-
     /**
-     * @OA\Get(
+     *  @OA\Get(
      *      path="/comments",
      *      operationId="getComments",
      *      tags={"comment"},
@@ -48,7 +47,7 @@ class CommentController extends Controller
      * )
      * Retrieve all comments
      *
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {

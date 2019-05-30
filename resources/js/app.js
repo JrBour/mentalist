@@ -17,6 +17,8 @@ import Categories from './pages/Categories/Index';
 import ShowCategory from './pages/Categories/Show';
 import CategoryForm from './pages/Categories/CategoryForm';
 
+import Users from './pages/Users/Index';
+
 import Comments from './pages/Comments/Index';
 import ShowComment from './pages/Comments/Show';
 import EditComment from './pages/Comments/CommentForm';
@@ -42,6 +44,21 @@ const router = new VueRouter({
             path: '/login',
             name: 'login',
             component: Login
+        },
+        {
+            path: '/users',
+            name: 'users',
+            component: Users
+        },
+        {
+            path: '/users/:id',
+            name: 'showUser',
+            component: Profile
+        },
+        {
+            path: '/users/:id/edit',
+            name: 'editUser',
+            component: ProfileEdit
         },
         {
             path: '/comments',

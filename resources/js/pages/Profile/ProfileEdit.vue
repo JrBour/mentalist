@@ -25,7 +25,12 @@
                         label="E-mail"
                         required
                     ></v-text-field>
+                    <v-checkbox
+                        label="Admin"
+                        v-model="user.admin"
+                    ></v-checkbox>
                     <v-text-field
+                        v-if="id === null"
                         v-model="user.password"
                         label="Password"
                         :rules="fieldRules"
@@ -51,6 +56,7 @@
             valid: false,
             success:false,
             user : null,
+            id : null,
             fieldRules: [
                 v => !!v || 'This field is required',
             ],
@@ -59,16 +65,28 @@
                 v => /.+@.+/.test(v) || 'E-mail must be valid'
             ]
         }),
-        mounted(){
-            this.user = this.$store.getters.user ? this.$store.getters.user : {};
+        mounted: async function(){
+            this.id = this.$route.params.id;
+            if (this.id !== null){
+                const response = await axios.get(`users/${this.id}`);
+                if (response.status === 200)
+                    this.user = response.data; 
+            } else {
+                this.user = this.$store.getters.user ? this.$store.getters.user : {};
+            }
         },
         methods :{
             submit: async function (){
+
                 const response = await axios.put(`users/${this.user.id}`, this.user);
                 if (response.status === 200){
                     delete this.user.password;
-                    this.$store.commit('setUser', this.user)
-                    this.$router.push('/profile');
+                    if (this.id === null){
+                        this.$store.commit('setUser', this.user)
+                        this.$router.push('/profile');
+                    } else {
+                        this.$router.push(`/users/${this.id}`);
+                    }
                 }
             }
         }

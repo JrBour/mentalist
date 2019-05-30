@@ -260,7 +260,7 @@ class UserController extends Controller
             'name' => 'required|string|min:2|max:255',
             'email' => 'required|string|email|min:2|max:255',
             'username' => 'required|string|min:2|max:150',
-            'password' => 'required|string|min:6|max:255'
+            'password' => 'string|min:6|max:255'
         ]);
 
         if ($validation->fails())
@@ -271,7 +271,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->admin    = true;
-        $user->password = Hash::make($request->password);
+        $user->password = $request->password === '' ? Hash::make($request->password) : $user->password;
         $user->email_hashed = md5( strtolower( trim($request->email )));
 
         $user->save();

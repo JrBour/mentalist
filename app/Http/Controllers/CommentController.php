@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\Comment as CommentResource;
 use App\Comment;
 
 
@@ -118,9 +119,9 @@ class CommentController extends Controller
      * @param Comment $comment
      * @return Comment
      */
-    public function show(Comment $comment)
+    public function show(int $id)
     {
-        return $comment;
+        return new CommentResource(Comment::find($id));
     }
 
 

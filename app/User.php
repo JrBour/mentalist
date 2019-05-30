@@ -33,17 +33,17 @@ class User extends Authenticatable
 
     public function articles()
     {
-        return $this->hasMany('App\Article');
+        return $this->hasMany(Article::class);
     }
 
     public function comments()
     {
-        return $this->hasMany('App\Comment');
+        return $this->hasMany(Comment::class, 'author_id', 'id');
     }
 
     public function likes()
     {
-        return $this->hasMany('App\Like');
+        return $this->hasMany(Like::class);
     }
 
 }

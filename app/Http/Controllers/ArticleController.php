@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use App\Article;
-use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\Comment as CommentResource;
+
 
 /**
  * @OA\Tag(
@@ -52,7 +52,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        return DB::table('articles')->paginate(15);
+        return DB::table('articles')->paginate(10);
     }
 
     /**
@@ -91,6 +91,37 @@ class ArticleController extends Controller
         $article = Article::create($request->only(['title', 'content', 'author_id', 'category_id']));
 
         return Response::json($article,201);
+    }
+
+    /**
+     *  @OA\Get(
+     *      path="/arrticles/{id}/comments",
+     *      operationId="getCommentsByArticle",
+     *      tags={"commentsArticle"},
+     *      summary="Get comments by article",
+     *      @OA\Parameter(
+     *          in="path",
+     *          name="id",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/Comment"),
+     *       )
+     * )
+     *
+     * Get comments by article
+     *
+     * @param int $id
+     * @return \Illuminate\Support\Collection
+     */
+    public function getCommentsByArticle(int $id)
+    {
+        return CommentResource::collection(DB::table('comments')->where('article_id', $id)->get());
     }
 
     /**

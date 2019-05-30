@@ -48,7 +48,6 @@ export default {
             } else {
                 const response = await axios.post(`categories`, {name : this.name});
                 if (response.status === 201){
-                    this.name = response.data.name;
                     this.$router.push('/categories');
                 }
             }

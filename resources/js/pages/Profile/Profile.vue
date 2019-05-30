@@ -13,7 +13,7 @@
             </v-btn>
             <h2 class="display-3">Your articles</h2>
             <v-layout>
-                <ArticlesCard v-for="article in articles" :key="article.id" :article="article"/>
+                <ArticleCard v-for="article in articles" :key="article.id" :article="article"/>
             </v-layout>
         </div>
         <div v-else>
@@ -24,7 +24,7 @@
 
 <script>
     import axios from 'axios';
-    import ArticlesCard from '../../components/ArticlesCard';
+    import ArticleCard from '../../components/ArticleCard';
     export default {
         data: () => ({
             user: null,
@@ -32,7 +32,7 @@
             loading: true
         }),
         components: {
-            ArticlesCard
+            ArticleCard
         },
         mounted: async function(){
             if (localStorage.getItem('userId') === null)

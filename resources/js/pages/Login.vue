@@ -53,6 +53,7 @@
                     localStorage.setItem('userId', response.data.id);
                     delete response.data.token;
                     this.$store.commit('setUser', response.data);
+                    this.$store.commit('setAdmin', response.data.admin);
                     this.$router.push('/');
                 }
             }

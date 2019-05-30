@@ -10,3 +10,4 @@ Route::post('/login', 'UserController@login');
 
 Route::get('/users/{id}/articles', 'UserController@getArticlesByUser');
 Route::get('/categories/{id}/articles', 'CategoryController@getArticlesByCategory');
+Route::get('/articles/{id}/comments', 'ArticleController@getCommentsByArticle');

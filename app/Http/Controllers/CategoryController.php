@@ -52,7 +52,6 @@ class CategoryController extends Controller
         return DB::table('categories')->paginate(10);
     }
 
-
     /**
      *  @OA\Get(
      *      path="/categories/{id}/articles",
@@ -73,6 +72,8 @@ class CategoryController extends Controller
      *          @OA\JsonContent(ref="#/components/schemas/Article"),
      *       )
      * )
+     *
+     * Get articles by category
      *
      * @param int $id
      * @return \Illuminate\Support\Collection

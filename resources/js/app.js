@@ -12,9 +12,15 @@ import { store } from './store/store';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+
 import Categories from './pages/Categories/Index';
 import ShowCategory from './pages/Categories/Show';
 import CategoryForm from './pages/Categories/CategoryForm';
+
+import Articles from './pages/Articles/Index';
+import ShowArticle from './pages/Articles/Show';
+import ArticleForm from './pages/Articles/ArticleForm';
+
 import Profile from './pages/Profile/Profile';
 import ProfileEdit from './pages/Profile/ProfileEdit';
 
@@ -52,6 +58,27 @@ const router = new VueRouter({
             path: '/categories/:id/edit',
             name: 'editCategory',
             component: CategoryForm
+        },
+        {
+            path: '/articles',
+            name: 'articles',
+            component: Articles
+        },
+        {
+            path: '/articles/create',
+            name: 'createArticle',
+            component: ArticleForm,
+            props: { categoryId: false }
+        },
+        {
+            path: '/articles/:id',
+            name: 'showArticle',
+            component: ShowArticle
+        },
+        {
+            path: '/articles/:id/edit',
+            name: 'editArticle',
+            component: ArticleForm
         },
         {
             path: '/register',

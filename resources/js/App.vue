@@ -8,6 +8,9 @@
                 <v-btn flat :to="{ name: 'categories' }">
                     Categories
                 </v-btn>
+                <v-btn flat :to="{ name: 'articles' }">
+                    Articles
+                </v-btn>
                 <v-btn v-if="$store.getters.user === null" flat :to="{ name: 'login' }">
                     Login
                 </v-btn>
@@ -35,11 +38,13 @@
             if (userId !== null) {
                 const user = await axios.get(`users/${userId}`);
                 this.$store.commit('setUser', user.data);
+                this.$store.commit('setAdmin', user.data.admin);
             }
         },
         methods: {
             logout(){
                 this.$store.commit('setUser', null);
+                this.$store.commit('setAdmin', false);
                 localStorage.clear()
                 this.$router.push('/');
             }

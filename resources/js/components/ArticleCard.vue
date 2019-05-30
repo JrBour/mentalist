@@ -10,7 +10,7 @@
 
             <v-card-actions>
                 <v-btn flat color="orange">Like</v-btn>
-                <v-btn flat color="orange">Read more...</v-btn>
+                <v-btn flat color="orange" @click="$router.push(`/articles/${article.id}`)">Read more...</v-btn>
             </v-card-actions>
         </v-card>
     </v-flex>

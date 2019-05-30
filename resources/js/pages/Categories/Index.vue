@@ -5,13 +5,16 @@
             <CategoryCard v-for="category in categories" :key="category.id" :category="category"/>
         </v-layout>
         <v-btn color="success" @click="$router.push('/categories/create')">
-        Create new category
+            Create new category
         </v-btn>
-        <v-pagination
-            v-model="page"
-            :length="(total%10 === 0)? total/10 : total/10+1"
-            @input="next"
-        ></v-pagination>
+        <v-flex xs12 sm6>
+            <v-pagination
+                v-if="total !== 0"
+                v-model="page"
+                :length="(total%10 === 0) ? total/10 : total/10+1"
+                @input="next"
+            ></v-pagination>
+        </v-flex>
     </div>
 </template>
 <script>

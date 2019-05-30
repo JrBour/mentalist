@@ -22,8 +22,9 @@ use Illuminate\Support\Facades\Validator;
  */
 class UserController extends Controller
 {
+
     /**
-     * * @OA\Get(
+     *  @OA\Get(
      *      path="/users",
      *      operationId="getUsersList",
      *      tags={"user"},
@@ -48,10 +49,14 @@ class UserController extends Controller
      * )
      * Retrieve all users
      *
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @param Request $request
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Support\Collection
      */
-    public function index()
+    public function index(Request $request)
     {
+        if (!is_null($request->query('search')))
+            return DB::table('users')->where('name', 'LIKE', '%'.$request->query('search').'%')->get();
+
         return DB::table('users')->paginate(15);
     }
 

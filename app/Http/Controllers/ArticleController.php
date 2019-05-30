@@ -49,7 +49,7 @@ class ArticleController extends Controller
      * )
      * Retrieve all articles
      *
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
@@ -95,7 +95,7 @@ class ArticleController extends Controller
     }
 
     /**
-     *  @OA\Get(
+     * @OA\Get(
      *      path="/arrticles/{id}/comments",
      *      operationId="getCommentsByArticle",
      *      tags={"commentsArticle"},
@@ -118,7 +118,7 @@ class ArticleController extends Controller
      * Get comments by article
      *
      * @param int $id
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function getCommentsByArticle(int $id)
     {
@@ -126,7 +126,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * @OA\Get(
+     *  @OA\Get(
      *      path="/articles/{id}",
      *      operationId="getArticle",
      *      tags={"article"},
@@ -149,7 +149,7 @@ class ArticleController extends Controller
      * Get article by id
      *
      * @param Article $article
-     * @return Article
+     * @return ArticleResource
      */
     public function show(Article $article)
     {

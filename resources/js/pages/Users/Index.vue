@@ -1,8 +1,26 @@
 <template>
     <div>
+        <v-form>
+            <v-text-field
+                v-model="search"
+                label="Search by name"
+            ></v-text-field>
+            <v-btn
+                color="success"
+                @click="searchUsers"
+            >
+                Search
+            </v-btn>
+            <v-btn
+                color="warning"
+                @click="reset"
+            >
+                Reset
+            </v-btn>
+        </v-form>
         <v-flex xs12 sm6 offset-sm3>
             <v-card>
-                <v-list two-line v-if="users.length >0">
+                <v-list two-line>
                     <template v-for="user in users">
                         <v-list-tile v-if="user.id !== $store.getters.user.id" :key="user.id" avatar>
                             <v-list-tile-avatar @click="$router.push(`/users/${user.id}`)">
@@ -21,7 +39,7 @@
         <v-layout>
             <v-flex xs12 sm6>
                 <v-pagination
-                    v-if="totalPage !== 0"
+                    v-if="totalPage !== 0 && !searching"
                     v-model="page"
                     :length="totalPage"
                     @input="changePage"
@@ -36,6 +54,8 @@ import axios from 'axios';
 export default {
     data: () => ({
         users: [],
+        searching: false,
+        search: '',
         totalPage : 0,
         page: 1
     }),
@@ -52,6 +72,21 @@ export default {
             if (users.status === 200){
                 this.users = users.data.data;
             }
+        },
+        searchUsers: async function (){
+            const users = await axios.get(`users?search=${this.search}`);
+            if (users.status === 200){
+                this.users = users.data;
+                this.searching = true;
+            }
+        },
+        reset: async function (){
+            const response = await axios.get('users');
+            if (response.status === 200){
+                this.users = response.data.data;
+                this.searching = false;
+                this.totalPage = response.data.last_page;
+            }   
         }
     }
 }

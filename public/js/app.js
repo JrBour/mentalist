@@ -4791,11 +4791,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       users: [],
+      searching: false,
+      search: '',
       totalPage: 0,
       page: 1
     };
@@ -4867,6 +4887,75 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return changePage;
+    }(),
+    searchUsers: function () {
+      var _searchUsers = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var users;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("users?search=".concat(this.search));
+
+              case 2:
+                users = _context3.sent;
+
+                if (users.status === 200) {
+                  this.users = users.data;
+                  this.searching = true;
+                }
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function searchUsers() {
+        return _searchUsers.apply(this, arguments);
+      }
+
+      return searchUsers;
+    }(),
+    reset: function () {
+      var _reset = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('users');
+
+              case 2:
+                response = _context4.sent;
+
+                if (response.status === 200) {
+                  this.users = response.data.data;
+                  this.searching = false;
+                  this.totalPage = response.data.last_page;
+                }
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function reset() {
+        return _reset.apply(this, arguments);
+      }
+
+      return reset;
     }()
   }
 });
@@ -7529,79 +7618,106 @@ var render = function() {
     "div",
     [
       _c(
+        "v-form",
+        [
+          _c("v-text-field", {
+            attrs: { label: "Search by name" },
+            model: {
+              value: _vm.search,
+              callback: function($$v) {
+                _vm.search = $$v
+              },
+              expression: "search"
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            { attrs: { color: "success" }, on: { click: _vm.searchUsers } },
+            [_vm._v("\n            Search\n        ")]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-btn",
+            { attrs: { color: "warning" }, on: { click: _vm.reset } },
+            [_vm._v("\n            Reset\n        ")]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
         "v-flex",
         { attrs: { xs12: "", sm6: "", "offset-sm3": "" } },
         [
           _c(
             "v-card",
             [
-              _vm.users.length > 0
-                ? _c(
-                    "v-list",
-                    { attrs: { "two-line": "" } },
-                    [
-                      _vm._l(_vm.users, function(user) {
-                        return [
-                          user.id !== _vm.$store.getters.user.id
-                            ? _c(
-                                "v-list-tile",
-                                { key: user.id, attrs: { avatar: "" } },
+              _c(
+                "v-list",
+                { attrs: { "two-line": "" } },
+                [
+                  _vm._l(_vm.users, function(user) {
+                    return [
+                      user.id !== _vm.$store.getters.user.id
+                        ? _c(
+                            "v-list-tile",
+                            { key: user.id, attrs: { avatar: "" } },
+                            [
+                              _c(
+                                "v-list-tile-avatar",
+                                {
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.$router.push(
+                                        "/users/" + user.id
+                                      )
+                                    }
+                                  }
+                                },
                                 [
-                                  _c(
-                                    "v-list-tile-avatar",
-                                    {
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.$router.push(
-                                            "/users/" + user.id
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c("img", {
-                                        attrs: {
-                                          src:
-                                            "https://www.gravatar.com/avatar/" +
-                                            user.email_hashed
-                                        }
-                                      })
-                                    ]
-                                  ),
+                                  _c("img", {
+                                    attrs: {
+                                      src:
+                                        "https://www.gravatar.com/avatar/" +
+                                        user.email_hashed
+                                    }
+                                  })
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-list-tile-content",
+                                [
+                                  _c("v-list-tile-title", {
+                                    domProps: {
+                                      innerHTML: _vm._s(user.firstname)
+                                    }
+                                  }),
                                   _vm._v(" "),
-                                  _c(
-                                    "v-list-tile-content",
-                                    [
-                                      _c("v-list-tile-title", {
-                                        domProps: {
-                                          innerHTML: _vm._s(user.firstname)
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      _c("v-list-tile-title", {
-                                        domProps: {
-                                          innerHTML: _vm._s(user.lastname)
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      _c("v-list-tile-sub-title", {
-                                        domProps: {
-                                          innerHTML: _vm._s(user.username)
-                                        }
-                                      })
-                                    ],
-                                    1
-                                  )
+                                  _c("v-list-tile-title", {
+                                    domProps: {
+                                      innerHTML: _vm._s(user.lastname)
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("v-list-tile-sub-title", {
+                                    domProps: {
+                                      innerHTML: _vm._s(user.username)
+                                    }
+                                  })
                                 ],
                                 1
                               )
-                            : _vm._e()
-                        ]
-                      })
-                    ],
-                    2
-                  )
-                : _vm._e()
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ]
+                  })
+                ],
+                2
+              )
             ],
             1
           )
@@ -7616,7 +7732,7 @@ var render = function() {
             "v-flex",
             { attrs: { xs12: "", sm6: "" } },
             [
-              _vm.totalPage !== 0
+              _vm.totalPage !== 0 && !_vm.searching
                 ? _c("v-pagination", {
                     attrs: { length: _vm.totalPage },
                     on: { input: _vm.changePage },

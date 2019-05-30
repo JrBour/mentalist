@@ -11,6 +11,9 @@
                 <v-btn flat :to="{ name: 'articles' }">
                     Articles
                 </v-btn>
+                <v-btn flat :to="{ name: 'comments' }">
+                    Comments
+                </v-btn>
                 <v-btn v-if="$store.getters.user === null" flat :to="{ name: 'login' }">
                     Login
                 </v-btn>

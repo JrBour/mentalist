@@ -11,19 +11,7 @@
         <v-btn v-if="$store.getters.admin" color="error" @click="remove(article.id)">
             Delete
         </v-btn>
-        <v-list two-line>
-            <template v-for="comment in comments">
-                <v-list-tile :key="comment.id">
-                    <v-list-tile-avatar>
-                        <img :src="'https://www.gravatar.com/avatar/' + comment.author_id.email_hashed">
-                    </v-list-tile-avatar>
-
-                    <v-list-tile-content>
-                        <v-list-tile-sub-title v-html="comment.content"></v-list-tile-sub-title>
-                    </v-list-tile-content>
-                </v-list-tile>
-            </template>
-        </v-list>
+       <CommentCard v-for="comment in comments" :key="comment.id" :comment="comment"/>
         <v-form v-if="$store.getters.users !== null">
             <v-container>
                 <v-text-field
@@ -45,7 +33,11 @@
 
 <script>
 import axios from 'axios';
+import CommentCard from '../../components/CommentCard';
 export default {
+    components:{
+        CommentCard
+    },
     data: () => ({
         article: null,
         comments: [],

@@ -52,7 +52,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        return DB::table('comments')->paginate(15);
+        return CommentResource::collection(DB::table('comments')->paginate(10));
     }
 
 

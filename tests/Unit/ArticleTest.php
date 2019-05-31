@@ -32,4 +32,11 @@ class ArticleTest extends TestCase
             'category_id' => $article->category_id,
         ]);
     }
+
+    public function testArticleDelete()
+    {
+        $relationship = $this->createRelationshipObjectForArticle();
+        $article = factory(Article::class)->create(['author_id' => $relationship['author_id'], 'category_id' => $relationship['category_id']]);
+        $this->assertTrue($article->delete());
+    }
 }

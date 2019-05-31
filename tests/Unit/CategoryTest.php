@@ -18,4 +18,10 @@ class CategoryTest extends TestCase
             'name' => $category->name,
         ]);
     }
+
+    public function testCategoryDelete()
+    {
+        $category = factory(Category::class)->create();
+        $this->assertTrue($category->delete());
+    }
 }

@@ -33,4 +33,11 @@ class CommentTest extends TestCase
             'article_id' => $comment->article_id
         ]);
     }
+
+    public function testCommentDelete()
+    {
+        $relationship = $this->createRelationshipObjectForComment();
+        $comment = factory(Comment::class)->create(['author_id' => $relationship['author_id'], 'article_id' => $relationship['article_id']]);
+        $this->assertTrue($comment->delete());
+    }
 }

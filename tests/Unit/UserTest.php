@@ -25,4 +25,10 @@ class UserTest extends TestCase
             'remember_token' => $user->remember_token
         ]);
     }
+
+    public function testUserDelete()
+    {
+        $user = factory(User::class)->create();
+        $this->assertTrue($user->delete());
+    }
 }

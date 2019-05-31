@@ -32,4 +32,11 @@ class LikeTest extends TestCase
             'user_id' => $like->user_id
         ]);
     }
+
+    public function testLikeDelete()
+    {
+        $relationship = $this->createRelationshipObjectForLike();
+        $like = factory(Like::class)->create(['user_id' => $relationship['user_id'], 'article_id' => $relationship['article_id']]);
+        $this->assertTrue($like->delete());
+    }
 }
